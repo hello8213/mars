@@ -9,43 +9,35 @@
 <style>
 :root{
  --bg:#f7f1ff;--card:#fff;--text:#352547;--muted:#83758f;
- --primary:#9670d3;--primary2:#6d4ba8;--soft:#eee4ff;
- --line:#e8dcf6;--shadow:0 12px 35px #49316a12
+ --primary:#9670d3;--soft:#eee4ff;--line:#e8dcf6;
+ --shadow:0 12px 35px #49316a12
 }
 body.dark{
  --bg:#15111e;--card:#211a2e;--text:#f5edff;--muted:#b8a9c8;
- --primary:#b69ae8;--primary2:#d1b8ff;--soft:#332743;
- --line:#443451;--shadow:0 12px 35px #0003
+ --primary:#b69ae8;--soft:#332743;--line:#443451;
+ --shadow:0 12px 35px #0003
 }
 *{box-sizing:border-box}
 body{
  margin:0;background:var(--bg);color:var(--text);
- font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
- transition:background .25s,color .25s
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
 }
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
 button:disabled{opacity:.5;cursor:not-allowed}
 .hero{
- position:relative;overflow:hidden;text-align:center;padding:42px 16px 35px;
- background:linear-gradient(135deg,#201633,#514075,#9276c9);color:#fff
+ position:relative;text-align:center;padding:48px 16px 35px;
+ background:linear-gradient(135deg,#201633,#514075,#9276c9);color:white
 }
-.hero:before,.hero:after{
- content:"✦ · ✧ · ✦ · ✧";
- position:absolute;opacity:.35;letter-spacing:12px;font-size:20px;left:0;right:0
-}
-.hero:before{top:15px}.hero:after{bottom:12px}
 .hero h1{font-size:clamp(25px,6vw,38px);margin:10px 0}
-.hero p{margin:8px auto;max-width:500px;line-height:1.8}
-.hero .tag{font-size:12px;letter-spacing:3px;opacity:.8}
-.top-actions{position:absolute;right:12px;top:12px;z-index:2}
-.top-actions button{
- width:auto;padding:8px 12px;background:#ffffff20;border:1px solid #ffffff50
-}
+.hero p{line-height:1.8;margin:8px auto}
+.tag{font-size:12px;letter-spacing:3px;opacity:.8}
+.top-actions{position:absolute;right:12px;top:12px}
 main{max-width:850px;margin:22px auto;padding:0 14px 40px}
 .card{
- background:var(--card);border:1px solid var(--line);border-radius:20px;
- padding:20px;margin-bottom:16px;box-shadow:var(--shadow)
+ background:var(--card);border:1px solid var(--line);
+ border-radius:20px;padding:20px;margin-bottom:16px;
+ box-shadow:var(--shadow)
 }
 .card h2{font-size:19px;margin:0 0 14px}
 .muted{color:var(--muted);font-size:13px;line-height:1.7}
@@ -54,12 +46,12 @@ input:not([type=checkbox]):not([type=file]),textarea,select{
  width:100%;padding:12px 13px;border:1px solid var(--line);
  background:var(--bg);color:var(--text);border-radius:12px;outline:none
 }
-input:focus,textarea:focus,select:focus{border-color:var(--primary)}
 textarea{min-height:100px;resize:vertical}
-.btn{border:0;border-radius:12px;padding:12px 16px;background:var(--primary);color:white;font-weight:650}
-.btn:hover{filter:brightness(1.04)}
+.btn{
+ border:0;border-radius:12px;padding:12px 16px;
+ background:var(--primary);color:white;font-weight:650
+}
 .btn.secondary{background:var(--soft);color:var(--text)}
-.btn.danger{background:#b64e68}
 .btn.full{width:100%;margin-top:10px}
 .btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .btnrow .btn{flex:1}
@@ -72,8 +64,8 @@ hr{border:0;border-top:1px solid var(--line);margin:18px 0}
 .notice.error{background:#ffe9ee;color:#8e2741}
 .notice.ok{background:#e4f8ec;color:#226941}
 .box-item,.message,.reply{
- border:1px solid var(--line);border-radius:15px;padding:15px;
- margin:12px 0;background:var(--card);overflow-wrap:anywhere
+ border:1px solid var(--line);border-radius:15px;
+ padding:15px;margin:12px 0;background:var(--card);overflow-wrap:anywhere
 }
 .box-item h3{margin:0 0 8px}
 .box-item p,.message p,.reply p{line-height:1.8;white-space:pre-wrap}
@@ -81,25 +73,23 @@ hr{border:0;border-top:1px solid var(--line);margin:18px 0}
 .message{background:var(--soft)}
 .message img{max-width:100%;max-height:400px;object-fit:contain;border-radius:12px}
 .message-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
-.reply{margin-left:12px;padding:12px;background:var(--bg)}
+.reply{margin-left:12px;background:var(--bg)}
 .pill{display:inline-block;padding:4px 9px;border-radius:20px;background:var(--soft);font-size:12px}
 .empty{text-align:center;color:var(--muted);padding:24px 8px;line-height:2}
 footer{text-align:center;padding:10px 20px 32px;color:var(--muted);font-size:12px}
 .checkline{display:flex;align-items:center;gap:8px;margin:12px 0}
 .checkline input{width:18px;height:18px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:540px){
- .hero{padding-top:55px}
- .card{padding:16px;border-radius:16px}
- .grid{grid-template-columns:1fr}
- .btnrow{flex-direction:column}
- .btnrow .btn{width:100%}
+ .hero{padding-top:58px}.card{padding:16px;border-radius:16px}
+ .btnrow{flex-direction:column}.btnrow .btn{width:100%}
 }
 </style>
 </head>
 <body>
 <header class="hero">
- <div class="top-actions"><button class="btn" id="themeBtn">☾ 主题</button></div>
+ <div class="top-actions">
+  <button class="btn" id="themeBtn">☾ 主题</button>
+ </div>
  <div class="tag">HUA CHEN YU · STAR LETTERS</div>
  <h1>🌌 花花的星海信箱</h1>
  <p>把想说的话，寄往星光所在的地方。</p>
@@ -107,9 +97,14 @@ footer{text-align:center;padding:10px 20px 32px;color:var(--muted);font-size:12p
 </header>
 <main>
  <div id="notice" class="notice hidden" role="status" aria-live="polite"></div>
+ <section class="card hidden" id="shareLanding">
+  <h2>🌌 你收到了一封星海邀请</h2>
+  <p class="muted">正在打开好友分享的专属留言箱。</p>
+  <div id="shareLoading" class="empty">正在寻找这片星海……</div>
+ </section>
  <section class="card" id="authPanel">
   <h2>✦ 来自星海的访客</h2>
-  <p class="muted">注册或登录后管理自己的留言箱。请使用可以接收验证邮件的邮箱。</p>
+  <p class="muted">登录后创建和管理自己的留言箱。</p>
   <label for="email">邮箱</label>
   <input id="email" type="email" autocomplete="email" placeholder="name@example.com">
   <label for="password">密码</label>
@@ -132,7 +127,7 @@ footer{text-align:center;padding:10px 20px 32px;color:var(--muted);font-size:12p
   <label for="boxTitle">留言箱名称</label>
   <input id="boxTitle" maxlength="100" placeholder="例如：花花的星海信箱">
   <label for="boxDescription">留言箱介绍</label>
-  <textarea id="boxDescription" maxlength="1000" placeholder="写一段介绍，让来访的人知道这里是什么地方……"></textarea>
+  <textarea id="boxDescription" maxlength="1000" placeholder="写一段介绍……"></textarea>
   <label for="boxTheme">星海主题</label>
   <select id="boxTheme">
    <option value="huachen">华晨宇 · 星海紫</option>
@@ -140,7 +135,6 @@ footer{text-align:center;padding:10px 20px 32px;color:var(--muted);font-size:12p
    <option value="dream">梦境粉</option>
   </select>
   <button class="btn full" id="createBoxBtn">✨ 创建留言箱</button>
-  <p class="muted">如果数据库不接受所选主题，系统会尝试兼容主题值；数据库约束仍需与实际允许值一致。</p>
  </section>
  <section class="card hidden" id="boxesPanel">
   <h2>✦ 我的留言箱</h2>
@@ -152,11 +146,23 @@ footer{text-align:center;padding:10px 20px 32px;color:var(--muted);font-size:12p
   <h2 id="detailTitle">星海留言</h2>
   <p id="detailDescription" class="muted"></p>
   <div class="pill" id="detailSlug"></div>
+  <section class="card" id="sharePanel" style="margin-top:16px">
+   <h2>📨 将留言箱发给好友</h2>
+   <p class="muted">生成专属链接，好友打开后进入这个留言箱。</p>
+   <button class="btn full" id="shareBtn">📨 将留言箱发给好友</button>
+   <div id="shareResult" class="hidden">
+    <label for="shareUrl">专属分享链接</label>
+    <input id="shareUrl" type="url" readonly>
+    <button class="btn secondary full" id="copyShareBtn">复制链接</button>
+   </div>
+  </section>
   <hr>
   <h2>✉️ 写下一封信</h2>
   <label for="nickname">留言昵称</label>
   <input id="nickname" maxlength="40" placeholder="星友">
-  <label class="checkline"><input id="anonymous" type="checkbox" checked> 匿名留言</label>
+  <label class="checkline">
+   <input id="anonymous" type="checkbox" checked> 匿名留言
+  </label>
   <label for="messageContent">留言内容</label>
   <textarea id="messageContent" maxlength="5000" placeholder="想说的话，都可以写在这里……"></textarea>
   <label for="imageFile">附上一张图片（可选，最大 5 MB）</label>
@@ -179,70 +185,100 @@ let db = null;
 let user = null;
 let currentBox = null;
 let boxes = [];
-let busy = false;
-function notify(message, type = "") {
- const el = $("notice");
- el.textContent = message;
- el.className = "notice" + (type ? " " + type : "");
+let publicMode = false;
+function notify(message,type="") {
+ const el=$("notice");
+ el.textContent=message;
+ el.className="notice"+(type?" "+type:"");
  el.classList.remove("hidden");
 }
-function clearNotice() {
- $("notice").classList.add("hidden");
+function explainError(error,operation) {
+ const msg=[error?.message,error?.details,error?.hint,error?.code]
+  .filter(Boolean).join("\n");
+ if (/row-level security|permission denied|42501/i.test(msg)) {
+  return operation+"失败：Supabase 数据库权限不允许此操作。\n"+
+   "当前公开访问策略可能尚未配置。\n"+msg;
+ }
+ if (/boxes_theme_check|23514/i.test(msg)) {
+  return operation+"失败：数据库主题约束不接受所选值。\n"+msg;
+ }
+ return operation+"失败：\n"+(msg||"未知错误");
 }
 function setBusy(value) {
- busy = value;
- document.querySelectorAll("button").forEach(b => {
-  if (!b.dataset.noBusy) b.disabled = value;
- });
+ document.querySelectorAll("button").forEach(b=>b.disabled=value);
 }
-function errorText(error) {
- if (!error) return "未知错误";
- return [error.message,error.details,error.hint,error.code]
-  .filter(Boolean).join("\n");
+function slugify() {
+ return "star-"+crypto.randomUUID().replaceAll("-","").slice(0,16);
 }
-function explainError(error, operation) {
- const msg = errorText(error);
- if (/Invalid path specified in request URL/i.test(msg)) {
-  return operation + "失败：请求路径无效。\n请确认 SDK 地址、Supabase Project URL 和请求表名。";
- }
- if (/row-level security|permission denied|42501/i.test(msg)) {
-  return operation + "失败：数据库权限策略拒绝了请求。\n请保留现有安全策略，并检查当前用户是否有对应权限。\n" + msg;
- }
- if (/schema cache|could not find the table|PGRST205|PGRST204/i.test(msg)) {
-  return operation + "失败：Supabase Data API 未识别该表或字段。\n检查表是否已启用 Data API 访问权限。\n" + msg;
- }
- return operation + "失败：\n" + msg;
+function makeShareUrl(box) {
+ const url=new URL(window.location.href);
+ url.search="";
+ url.hash="";
+ url.searchParams.set("box",box.slug);
+ return url.toString();
 }
-function setLoggedIn(nextUser) {
- user = nextUser || null;
+function showShareLink(box) {
+ $("shareUrl").value=makeShareUrl(box);
+ $("shareResult").classList.remove("hidden");
+}
+async function shareBox() {
+ if (!currentBox) return;
+ const link=makeShareUrl(currentBox);
+ $("shareUrl").value=link;
+ $("shareResult").classList.remove("hidden");
+ try {
+  if (navigator.share) {
+   await navigator.share({
+    title:currentBox.title,
+    text:currentBox.description||"欢迎来到我的星海信箱！",
+    url:link
+   });
+  } else {
+   await copyLink();
+  }
+ } catch(e) {
+  if (e.name!=="AbortError") {
+   notify("分享链接已生成，请点击「复制链接」。","ok");
+  }
+ }
+}
+async function copyLink() {
+ const input=$("shareUrl");
+ if (!input.value && currentBox) showShareLink(currentBox);
+ try {
+  await navigator.clipboard.writeText(input.value);
+  notify("复制成功！可以粘贴到微信聊天中。","ok");
+ } catch(e) {
+  input.focus();
+  input.select();
+  notify("请长按选中的链接并选择复制。","ok");
+ }
+}
+function showLoggedInPanels() {
  $("authPanel").classList.toggle("hidden",!!user);
  $("accountPanel").classList.toggle("hidden",!user);
  $("createPanel").classList.toggle("hidden",!user);
  $("boxesPanel").classList.toggle("hidden",!user);
- $("accountLabel").textContent = user ? "已登录：" + user.email : "";
- currentBox = null;
- $("detailPanel").classList.add("hidden");
-}
-function slugify() {
- return "star-" + crypto.randomUUID().replaceAll("-","").slice(0,16);
+ $("accountLabel").textContent=user?"已登录："+user.email:"";
 }
 async function register() {
- const email = $("email").value.trim();
- const password = $("password").value;
- if (!email || password.length < 6) {
+ const email=$("email").value.trim();
+ const password=$("password").value;
+ if (!email||password.length<6) {
   notify("请填写有效邮箱和至少 6 位密码。","error");
   return;
  }
  setBusy(true);
  try {
-  const {data,error} = await db.auth.signUp({email,password});
-  if (error) throw error;
-  if (data.session) {
-   setLoggedIn(data.user);
-   notify("注册成功，欢迎来到星海！","ok");
+  const {data,error}=await db.auth.signUp({email,password});
+  if(error) throw error;
+  if(data.session) {
+   user=data.user;
+   showLoggedInPanels();
    await loadBoxes();
+   notify("注册成功！","ok");
   } else {
-   notify("注册请求已提交。请检查邮箱，完成验证后再登录。","ok");
+   notify("注册请求已提交，请检查邮箱并完成验证。","ok");
   }
  } catch(e) {
   notify(explainError(e,"注册"),"error");
@@ -251,19 +287,20 @@ async function register() {
  }
 }
 async function login() {
- const email = $("email").value.trim();
- const password = $("password").value;
- if (!email || !password) {
+ const email=$("email").value.trim();
+ const password=$("password").value;
+ if(!email||!password) {
   notify("请填写邮箱和密码。","error");
   return;
  }
  setBusy(true);
  try {
-  const {data,error} = await db.auth.signInWithPassword({email,password});
-  if (error) throw error;
-  setLoggedIn(data.user);
-  notify("登录成功！","ok");
+  const {data,error}=await db.auth.signInWithPassword({email,password});
+  if(error) throw error;
+  user=data.user;
+  showLoggedInPanels();
   await loadBoxes();
+  notify("登录成功！","ok");
  } catch(e) {
   notify(explainError(e,"登录"),"error");
  } finally {
@@ -273,11 +310,12 @@ async function login() {
 async function logout() {
  setBusy(true);
  try {
-  const {error} = await db.auth.signOut();
-  if (error) throw error;
-  setLoggedIn(null);
+  const {error}=await db.auth.signOut();
+  if(error) throw error;
+  user=null;
+  showLoggedInPanels();
   $("boxesList").replaceChildren();
-  notify("已安全退出。","ok");
+  notify("已退出登录。","ok");
  } catch(e) {
   notify(explainError(e,"退出登录"),"error");
  } finally {
@@ -285,289 +323,263 @@ async function logout() {
  }
 }
 async function loadBoxes() {
- if (!user) return;
- $("boxesList").textContent = "正在加载留言箱……";
+ if(!user) return;
+ $("boxesList").textContent="正在加载留言箱……";
  try {
-  const {data,error} = await db.from("boxes")
+  const {data,error}=await db.from("boxes")
    .select("id,owner_id,slug,title,description,theme,created_at")
    .eq("owner_id",user.id)
    .order("created_at",{ascending:false});
-  if (error) throw error;
-  boxes = data || [];
+  if(error) throw error;
+  boxes=data||[];
   renderBoxes();
  } catch(e) {
-  $("boxesList").textContent = "";
+  $("boxesList").textContent="";
   notify(explainError(e,"加载留言箱"),"error");
  }
 }
 function renderBoxes() {
- const root = $("boxesList");
+ const root=$("boxesList");
  root.replaceChildren();
- if (!boxes.length) {
-  const empty = document.createElement("div");
-  empty.className = "empty";
-  empty.textContent = "这里还没有留言箱。\n创建你的第一个星海留言箱吧 ✨";
+ if(!boxes.length) {
+  const empty=document.createElement("div");
+  empty.className="empty";
+  empty.textContent="这里还没有留言箱。\n创建你的第一个星海留言箱吧 ✨";
   root.appendChild(empty);
   return;
  }
- for (const box of boxes) {
-  const article = document.createElement("article");
-  article.className = "box-item";
-  const h = document.createElement("h3");
-  h.textContent = "🌌 " + box.title;
-  const p = document.createElement("p");
-  p.textContent = box.description || "把想说的话，寄往星光所在的地方。";
-  const meta = document.createElement("div");
-  meta.className = "box-meta";
-  meta.textContent = "主题：" + box.theme + " · " +
-   new Date(box.created_at).toLocaleString();
-  const btn = document.createElement("button");
-  btn.className = "btn full";
-  btn.textContent = "打开留言箱";
-  btn.addEventListener("click",() => openBox(box));
-  article.append(h,p,meta,btn);
+ for(const box of boxes) {
+  const article=document.createElement("article");
+  article.className="box-item";
+  const title=document.createElement("h3");
+  title.textContent="🌌 "+box.title;
+  const desc=document.createElement("p");
+  desc.textContent=box.description||"把想说的话，寄往星光所在的地方。";
+  const meta=document.createElement("div");
+  meta.className="box-meta";
+  meta.textContent="主题："+box.theme;
+  const open=document.createElement("button");
+  open.className="btn full";
+  open.textContent="打开留言箱";
+  open.addEventListener("click",()=>openBox(box));
+  const share=document.createElement("button");
+  share.className="btn secondary full";
+  share.textContent="📨 将留言箱发给好友";
+  share.addEventListener("click",async()=>{
+   await openBox(box);
+   showShareLink(box);
+   $("sharePanel").scrollIntoView({behavior:"smooth",block:"center"});
+  });
+  article.append(title,desc,meta,open,share);
   root.appendChild(article);
  }
 }
-/*
- * 主题修复：
- * 1. 首先尝试用户选择的主题。
- * 2. 只有遇到 PostgreSQL CHECK 约束错误时才尝试候选值。
- * 3. 每次失败的 INSERT 都会返回错误；不会成功插入一条记录后再继续尝试。
- * 4. 如果全部候选值都失败，则显示错误，避免声称创建成功。
- *
- * 注意：候选值并不代表数据库一定允许这些值。
- * 最准确的修复仍然是确认 boxes_theme_check 的真实允许值。
- */
 async function insertBoxWithCompatibleTheme(record) {
- const selectedTheme = record.theme;
- const candidates = [
-  selectedTheme,
-  "huachen",
-  "moon",
-  "dream",
-  "purple",
-  "blue",
-  "pink",
-  "default",
-  "light",
-  "dark",
-  "star"
- ];
- const uniqueCandidates = [...new Set(candidates)];
- let lastError = null;
- for (const candidate of uniqueCandidates) {
-  const payload = {...record,theme:candidate};
-  const {data,error} = await db
-   .from("boxes")
-   .insert(payload)
-   .select("*")
-   .single();
-  if (!error) {
-   return {data,error:null,storedTheme:candidate};
-  }
-  lastError = error;
-  const isThemeConstraint =
-   error.code === "23514" &&
-   /boxes_theme_check/i.test(error.message || "");
-  if (!isThemeConstraint) {
+ const candidates=[...new Set([
+  record.theme,"huachen","moon","dream","purple","blue","pink",
+  "default","light","dark","star"
+ ])];
+ for(const theme of candidates) {
+  const {data,error}=await db.from("boxes")
+   .insert({...record,theme}).select("*").single();
+  if(!error) return data;
+  if(error.code!=="23514"||!/boxes_theme_check/i.test(error.message||"")) {
    throw error;
   }
  }
- // 所有候选值都不符合约束，最后尝试让数据库使用其默认值。
- // 若默认值也违反约束，则会把原始错误交给调用方。
- const {data,error} = await db
-  .from("boxes")
-  .insert({
-   owner_id:record.owner_id,
-   slug:record.slug,
-   title:record.title,
-   description:record.description
-  })
-  .select("*")
-  .single();
- if (!error) {
-  return {data,error:null,storedTheme:data.theme};
- }
- throw new Error(
-  "数据库拒绝了所有已尝试的主题值，使用默认主题也未成功。\n" +
-  "请确认 boxes_theme_check 允许的具体值。为避免继续猜测，程序已停止创建。\n" +
-  "最后一次错误：" + error.message +
-  (lastError ? "\n首次主题约束错误：" + lastError.message : "")
- );
+ const {data,error}=await db.from("boxes").insert({
+  owner_id:record.owner_id,slug:record.slug,
+  title:record.title,description:record.description
+ }).select("*").single();
+ if(error) throw error;
+ return data;
 }
 async function createBox() {
- if (!user) {
-  notify("请先登录后再创建留言箱。","error");
+ if(!user) {
+  notify("请先登录。","error");
   return;
  }
- const title = $("boxTitle").value.trim();
- const description = $("boxDescription").value.trim();
- const theme = $("boxTheme").value;
- if (!title) {
-  notify("请先填写留言箱名称。","error");
+ const title=$("boxTitle").value.trim();
+ if(!title) {
+  notify("请填写留言箱名称。","error");
   return;
  }
  setBusy(true);
  try {
-  const record = {
+  const box=await insertBoxWithCompatibleTheme({
    owner_id:user.id,
    slug:slugify(),
    title,
-   description:description || "把想说的话，寄往星光所在的地方。",
-   theme
-  };
-  const result = await insertBoxWithCompatibleTheme(record);
-  const data = result.data;
-  $("boxTitle").value = "";
-  $("boxDescription").value = "";
-  if (result.storedTheme !== theme) {
-   notify(
-    "留言箱创建成功！\n数据库接受的主题值是：" +
-    result.storedTheme +
-    "。请注意，数据库保存的主题可能与下拉框选择不同。",
-    "ok"
-   );
-  } else {
-   notify("留言箱创建成功！","ok");
-  }
+   description:$("boxDescription").value.trim()||
+    "把想说的话，寄往星光所在的地方。",
+   theme:$("boxTheme").value
+  });
+  $("boxTitle").value="";
+  $("boxDescription").value="";
   await loadBoxes();
-  if (data) await openBox(data);
+  await openBox(box);
+  showShareLink(box);
+  notify("留言箱创建成功！专属分享链接已生成。","ok");
  } catch(e) {
   notify(explainError(e,"创建留言箱"),"error");
  } finally {
   setBusy(false);
  }
 }
-async function openBox(box) {
- currentBox = box;
- $("detailTitle").textContent = box.title;
- $("detailDescription").textContent = box.description || "";
- $("detailSlug").textContent = "链接标识：" + box.slug;
- $("detailPanel").classList.remove("hidden");
+function enterDetailMode() {
+ $("authPanel").classList.add("hidden");
+ $("accountPanel").classList.add("hidden");
+ $("createPanel").classList.add("hidden");
  $("boxesPanel").classList.add("hidden");
+ $("detailPanel").classList.remove("hidden");
+ $("shareLanding").classList.add("hidden");
+}
+async function openBox(box) {
+ currentBox=box;
+ $("detailTitle").textContent=box.title;
+ $("detailDescription").textContent=box.description||"";
+ $("detailSlug").textContent="留言箱标识："+box.slug;
+ $("shareResult").classList.add("hidden");
+ enterDetailMode();
  await loadMessages();
- window.scrollTo({
-  top:$("detailPanel").offsetTop - 12,
-  behavior:"smooth"
- });
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+async function openPublicBox(slug) {
+ publicMode=true;
+ $("shareLanding").classList.remove("hidden");
+ $("authPanel").classList.add("hidden");
+ $("accountPanel").classList.add("hidden");
+ $("createPanel").classList.add("hidden");
+ $("boxesPanel").classList.add("hidden");
+ $("detailPanel").classList.add("hidden");
+ $("shareLoading").textContent="正在读取留言箱……";
+ try {
+  const {data,error}=await db.from("boxes")
+   .select("id,owner_id,slug,title,description,theme,created_at")
+   .eq("slug",slug).maybeSingle();
+  if(error) throw error;
+  if(!data) {
+   $("shareLoading").textContent=
+    "找不到这个留言箱，或者当前数据库权限不允许公开读取。";
+   return;
+  }
+  $("shareLanding").classList.add("hidden");
+  await openBox(data);
+  $("backBtn").classList.add("hidden");
+  $("sharePanel").classList.add("hidden");
+ } catch(e) {
+  $("shareLoading").textContent=
+   "无法打开留言箱。\n"+
+   "可能是数据库尚未允许匿名访客读取留言箱。\n"+
+   (e.message||"未知错误");
+ }
+}
+async function imageUrl(path) {
+ if(/^https?:\/\//i.test(path)) return path;
+ const {data,error}=await db.storage.from(BUCKET).createSignedUrl(path,3600);
+ if(!error&&data?.signedUrl) return data.signedUrl;
+ const {data:pub}=db.storage.from(BUCKET).getPublicUrl(path);
+ return pub?.publicUrl||"";
 }
 async function loadMessages() {
- if (!currentBox) return;
- const root = $("messagesList");
- root.textContent = "正在读取留言……";
+ if(!currentBox) return;
+ const root=$("messagesList");
+ root.textContent="正在读取留言……";
  try {
-  const {data,error} = await db.from("messages")
+  const {data,error}=await db.from("messages")
    .select("id,box_id,nickname,anonymous,content,image_path,created_at")
    .eq("box_id",currentBox.id)
-   .order("created_at",{ascending:false})
-   .limit(100);
-  if (error) throw error;
+   .order("created_at",{ascending:false}).limit(100);
+  if(error) throw error;
   root.replaceChildren();
-  if (!data || !data.length) {
-   const empty = document.createElement("div");
-   empty.className = "empty";
-   empty.textContent = "星海暂时很安静。\n成为第一个寄出心意的人吧。";
+  if(!data?.length) {
+   const empty=document.createElement("div");
+   empty.className="empty";
+   empty.textContent="星海暂时很安静。\n成为第一个寄出心意的人吧。";
    root.appendChild(empty);
    return;
   }
-  for (const message of data) {
-   const article = document.createElement("article");
-   article.className = "message";
-   const head = document.createElement("div");
-   head.className = "message-head";
-   const name = document.createElement("strong");
-   name.textContent = message.anonymous
-    ? "匿名星友"
-    : (message.nickname || "星友");
-   const date = document.createElement("span");
-   date.className = "box-meta";
-   date.textContent = new Date(message.created_at).toLocaleString();
-   head.append(name,date);
-   const content = document.createElement("p");
-   content.textContent = message.content || "";
+  for(const m of data) {
+   const article=document.createElement("article");
+   article.className="message";
+   const head=document.createElement("div");
+   head.className="message-head";
+   const name=document.createElement("strong");
+   name.textContent=m.anonymous?"匿名星友":(m.nickname||"星友");
+   const time=document.createElement("span");
+   time.className="box-meta";
+   time.textContent=new Date(m.created_at).toLocaleString();
+   head.append(name,time);
+   const content=document.createElement("p");
+   content.textContent=m.content||"";
    article.append(head,content);
-   if (message.image_path) {
-    const img = document.createElement("img");
-    img.alt = "留言图片";
-    img.loading = "lazy";
-    img.src = await imageUrl(message.image_path);
+   if(m.image_path) {
+    const img=document.createElement("img");
+    img.alt="留言图片";
+    img.loading="lazy";
+    img.src=await imageUrl(m.image_path);
     article.appendChild(img);
    }
-   const repliesRoot = document.createElement("div");
-   repliesRoot.className = "replies";
-   article.appendChild(repliesRoot);
-   const replyBtn = document.createElement("button");
-   replyBtn.className = "btn secondary";
-   replyBtn.textContent = "查看回复";
-   replyBtn.addEventListener("click",() => loadReplies(message,repliesRoot));
-   article.appendChild(replyBtn);
-   if (currentBox.owner_id === user?.id) {
-    const replyInput = document.createElement("textarea");
-    replyInput.placeholder = "作为留言箱主人，回复这封信……";
-    replyInput.maxLength = 3000;
-    const replySend = document.createElement("button");
-    replySend.className = "btn";
-    replySend.textContent = "发送回复";
-    replySend.addEventListener("click",() => sendReply(message,replyInput));
-    article.append(replyInput,replySend);
+   const replies=document.createElement("div");
+   replies.className="replies";
+   article.appendChild(replies);
+   const showReplies=document.createElement("button");
+   showReplies.className="btn secondary";
+   showReplies.textContent="查看回复";
+   showReplies.addEventListener("click",()=>loadReplies(m,replies));
+   article.appendChild(showReplies);
+   if(user&&currentBox.owner_id===user.id&&!publicMode) {
+    const input=document.createElement("textarea");
+    input.maxLength=3000;
+    input.placeholder="作为留言箱主人，回复这封信……";
+    const send=document.createElement("button");
+    send.className="btn";
+    send.textContent="发送回复";
+    send.addEventListener("click",()=>sendReply(m,input,replies));
+    article.append(input,send);
    }
    root.appendChild(article);
   }
  } catch(e) {
-  root.textContent = "";
-  notify(explainError(e,"加载留言"),"error");
+  root.textContent="无法读取留言。请检查 Supabase 的公开读取权限。\n"+(e.message||"");
  }
 }
-async function imageUrl(path) {
- if (/^https?:\/\//i.test(path)) return path;
- const {data,error} = await db.storage.from(BUCKET).createSignedUrl(path,3600);
- if (!error && data?.signedUrl) return data.signedUrl;
- const {data:publicData} = db.storage.from(BUCKET).getPublicUrl(path);
- return publicData?.publicUrl || "";
-}
 async function sendMessage() {
- if (!currentBox) return;
- const content = $("messageContent").value.trim();
- if (!content) {
+ if(!currentBox) return;
+ const content=$("messageContent").value.trim();
+ if(!content) {
   notify("请先写下留言内容。","error");
   return;
  }
- const file = $("imageFile").files[0];
- if (file && !file.type.startsWith("image/")) {
-  notify("请选择图片文件。","error");
-  return;
- }
- if (file && file.size > 5*1024*1024) {
-  notify("图片不能超过 5 MB。","error");
+ const file=$("imageFile").files[0];
+ if(file&&(!file.type.startsWith("image/")||file.size>5*1024*1024)) {
+  notify("请上传图片格式的文件，且大小不能超过 5 MB。","error");
   return;
  }
  setBusy(true);
  try {
-  let imagePath = null;
-  if (file) {
-   const ext = (file.name.split(".").pop() || "jpg")
-    .replace(/[^a-z0-9]/gi,"");
-   const path = "messages/" + crypto.randomUUID() + "." + ext;
-   const {data,error} = await db.storage.from(BUCKET)
-    .upload(path,file,{upsert:false,contentType:file.type});
-   if (error) throw error;
-   imagePath = data.path;
+  let imagePath=null;
+  if(file) {
+   const ext=(file.name.split(".").pop()||"jpg").replace(/[^a-z0-9]/gi,"");
+   const path="messages/"+crypto.randomUUID()+"."+ext;
+   const {data,error}=await db.storage.from(BUCKET).upload(path,file,{
+    upsert:false,contentType:file.type
+   });
+   if(error) throw error;
+   imagePath=data.path;
   }
-  const record = {
+  const anonymous=$("anonymous").checked;
+  const {error}=await db.from("messages").insert({
    box_id:currentBox.id,
-   nickname:$("anonymous").checked
-    ? "匿名访客"
-    : ($("nickname").value.trim() || "星友"),
-   anonymous:$("anonymous").checked,
+   nickname:anonymous?"匿名访客":($("nickname").value.trim()||"星友"),
+   anonymous,
    content,
    image_path:imagePath
-  };
-  const {error} = await db.from("messages").insert(record);
-  if (error) throw error;
-  $("messageContent").value = "";
-  $("imageFile").value = "";
-  notify("留言已寄出！愿你的心意被星光收藏。","ok");
+  });
+  if(error) throw error;
+  $("messageContent").value="";
+  $("imageFile").value="";
+  notify("留言已寄出！","ok");
   await loadMessages();
  } catch(e) {
   notify(explainError(e,"发送留言"),"error");
@@ -576,99 +588,90 @@ async function sendMessage() {
  }
 }
 async function loadReplies(message,root) {
- root.textContent = "正在加载回复……";
+ root.textContent="正在加载回复……";
  try {
-  const {data,error} = await db.from("replies")
+  const {data,error}=await db.from("replies")
    .select("id,box_id,message_id,content,created_at")
-   .eq("message_id",message.id)
-   .order("created_at",{ascending:true});
-  if (error) throw error;
+   .eq("message_id",message.id).order("created_at",{ascending:true});
+  if(error) throw error;
   root.replaceChildren();
-  if (!data || !data.length) {
-   const empty = document.createElement("p");
-   empty.className = "muted";
-   empty.textContent = "这封信还没有回复。";
-   root.appendChild(empty);
+  if(!data?.length) {
+   root.textContent="这封信还没有回复。";
    return;
   }
-  for (const reply of data) {
-   const div = document.createElement("div");
-   div.className = "reply";
-   const p = document.createElement("p");
-   p.textContent = reply.content;
-   const time = document.createElement("div");
-   time.className = "box-meta";
-   time.textContent = new Date(reply.created_at).toLocaleString();
-   div.append(p,time);
+  for(const r of data) {
+   const div=document.createElement("div");
+   div.className="reply";
+   const p=document.createElement("p");
+   p.textContent=r.content;
+   const t=document.createElement("div");
+   t.className="box-meta";
+   t.textContent=new Date(r.created_at).toLocaleString();
+   div.append(p,t);
    root.appendChild(div);
   }
  } catch(e) {
-  root.textContent = "";
-  notify(explainError(e,"加载回复"),"error");
+  root.textContent="无法读取回复："+(e.message||"未知错误");
  }
 }
-async function sendReply(message,input) {
- const content = input.value.trim();
- if (!content) {
-  notify("请先填写回复内容。","error");
-  return;
- }
- if (!currentBox || currentBox.owner_id !== user?.id) {
-  notify("只有留言箱主人可以在此处回复。","error");
+async function sendReply(message,input,repliesRoot) {
+ const content=input.value.trim();
+ if(!content||!user||currentBox?.owner_id!==user.id) {
+  notify("请登录留言箱主人账号并填写回复。","error");
   return;
  }
  setBusy(true);
  try {
-  const {error} = await db.from("replies").insert({
-   box_id:currentBox.id,
-   message_id:message.id,
-   content
+  const {error}=await db.from("replies").insert({
+   box_id:currentBox.id,message_id:message.id,content
   });
-  if (error) throw error;
-  input.value = "";
+  if(error) throw error;
+  input.value="";
   notify("回复发送成功！","ok");
-  const article = input.closest(".message");
-  await loadReplies(message,article.querySelector(".replies"));
+  await loadReplies(message,repliesRoot);
  } catch(e) {
   notify(explainError(e,"发送回复"),"error");
  } finally {
   setBusy(false);
  }
 }
-$("themeBtn").addEventListener("click",() => {
- document.body.classList.toggle("dark");
-});
+$("themeBtn").addEventListener("click",()=>document.body.classList.toggle("dark"));
 $("registerBtn").addEventListener("click",register);
 $("loginBtn").addEventListener("click",login);
 $("logoutBtn").addEventListener("click",logout);
 $("createBoxBtn").addEventListener("click",createBox);
 $("sendBtn").addEventListener("click",sendMessage);
 $("refreshBtn").addEventListener("click",loadBoxes);
-$("backBtn").addEventListener("click",() => {
- currentBox = null;
+$("shareBtn").addEventListener("click",shareBox);
+$("copyShareBtn").addEventListener("click",copyLink);
+$("backBtn").addEventListener("click",()=>{
+ currentBox=null;
+ publicMode=false;
  $("detailPanel").classList.add("hidden");
  $("boxesPanel").classList.remove("hidden");
 });
 async function start() {
- if (!window.supabase?.createClient) {
-  notify("Supabase SDK 加载失败。请检查网络或 CDN 是否可访问。","error");
+ if(!window.supabase?.createClient) {
+  notify("Supabase SDK 加载失败，请检查网络。","error");
   return;
  }
- if (!SUPABASE_KEY.startsWith("sb_publishable_")) {
-  notify("请检查 Supabase Publishable Key。","error");
-  return;
- }
+ db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
  try {
-  new URL(SUPABASE_URL);
-  db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-  const {data,error} = await db.auth.getSession();
-  if (error) throw error;
-  setLoggedIn(data.session?.user || null);
-  if (user) await loadBoxes();
-  db.auth.onAuthStateChange((_event,session) => {
-   setLoggedIn(session?.user || null);
-   if (session?.user) {
-    setTimeout(() => loadBoxes(),0);
+  const {data,error}=await db.auth.getSession();
+  if(error) throw error;
+  user=data.session?.user||null;
+  showLoggedInPanels();
+  const sharedSlug=new URLSearchParams(window.location.search).get("box");
+  if(sharedSlug) {
+   await openPublicBox(sharedSlug);
+  } else if(user) {
+   await loadBoxes();
+  }
+  db.auth.onAuthStateChange((_event,session)=>{
+   user=session?.user||null;
+   if(!publicMode) {
+    showLoggedInPanels();
+    if(user) setTimeout(()=>loadBoxes(),0);
    }
   });
  } catch(e) {
