@@ -18,55 +18,34 @@ body.dark{
  --shadow:0 12px 35px #0003
 }
 *{box-sizing:border-box}
-body{
- margin:0;background:var(--bg);color:var(--text);
- font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
-}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
 button:disabled{opacity:.5;cursor:not-allowed}
-.hero{
- position:relative;text-align:center;padding:48px 16px 35px;
- background:linear-gradient(135deg,#201633,#514075,#9276c9);color:white
-}
+.hero{position:relative;text-align:center;padding:48px 16px 35px;background:linear-gradient(135deg,#201633,#514075,#9276c9);color:white}
 .hero h1{font-size:clamp(25px,6vw,38px);margin:10px 0}
 .hero p{line-height:1.8;margin:8px auto}
 .tag{font-size:12px;letter-spacing:3px;opacity:.8}
 .top-actions{position:absolute;right:12px;top:12px}
 main{max-width:850px;margin:22px auto;padding:0 14px 40px}
-.card{
- background:var(--card);border:1px solid var(--line);
- border-radius:20px;padding:20px;margin-bottom:16px;
- box-shadow:var(--shadow)
-}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow)}
 .card h2{font-size:19px;margin:0 0 14px}
 .muted{color:var(--muted);font-size:13px;line-height:1.7}
 label{display:block;font-size:13px;margin:12px 0 5px;color:var(--muted)}
-input:not([type=checkbox]):not([type=file]),textarea,select{
- width:100%;padding:12px 13px;border:1px solid var(--line);
- background:var(--bg);color:var(--text);border-radius:12px;outline:none
-}
+input:not([type=checkbox]):not([type=file]),textarea,select{width:100%;padding:12px 13px;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:12px;outline:none}
 textarea{min-height:100px;resize:vertical}
-.btn{
- border:0;border-radius:12px;padding:12px 16px;
- background:var(--primary);color:white;font-weight:650
-}
+.btn{border:0;border-radius:12px;padding:12px 16px;background:var(--primary);color:white;font-weight:650}
 .btn.secondary{background:var(--soft);color:var(--text)}
+.btn.danger{background:#b9435c;color:white}
 .btn.full{width:100%;margin-top:10px}
 .btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .btnrow .btn{flex:1}
 hr{border:0;border-top:1px solid var(--line);margin:18px 0}
 .hidden{display:none!important}
-.notice{
- white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;
- padding:12px;border-radius:12px;background:var(--soft);margin:12px 0
-}
+.notice{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;padding:12px;border-radius:12px;background:var(--soft);margin:12px 0}
 .notice.error{background:#ffe9ee;color:#8e2741}
 .notice.ok{background:#e4f8ec;color:#226941}
-.box-item,.message,.reply{
- border:1px solid var(--line);border-radius:15px;
- padding:15px;margin:12px 0;background:var(--card);overflow-wrap:anywhere
-}
+.box-item,.message,.reply{border:1px solid var(--line);border-radius:15px;padding:15px;margin:12px 0;background:var(--card);overflow-wrap:anywhere}
 .box-item h3{margin:0 0 8px}
 .box-item p,.message p,.reply p{line-height:1.8;white-space:pre-wrap}
 .box-meta{font-size:12px;color:var(--muted)}
@@ -79,9 +58,17 @@ hr{border:0;border-top:1px solid var(--line);margin:18px 0}
 footer{text-align:center;padding:10px 20px 32px;color:var(--muted);font-size:12px}
 .checkline{display:flex;align-items:center;gap:8px;margin:12px 0}
 .checkline input{width:18px;height:18px}
+.reply-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.reply-actions .btn{flex:1}
+.reply-form{margin:12px 0;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+.status-public{color:#24804a}
+.status-hidden{color:#b9435c}
 @media(max-width:540px){
- .hero{padding-top:58px}.card{padding:16px;border-radius:16px}
- .btnrow{flex-direction:column}.btnrow .btn{width:100%}
+ .hero{padding-top:58px}
+ .card{padding:16px;border-radius:16px}
+ .btnrow{flex-direction:column}
+ .btnrow .btn{width:100%}
+ .reply-actions{flex-direction:column}
 }
 </style>
 </head>
@@ -170,6 +157,7 @@ footer{text-align:center;padding:10px 20px 32px;color:var(--muted);font-size:12p
   <button class="btn full" id="sendBtn">将信寄往星海</button>
   <hr>
   <h2>💫 留言星河</h2>
+  <p class="muted" id="replyHelp">可以查看公开回复，也可以给留言留下回复。</p>
   <div id="messagesList"><div class="empty">加载留言中……</div></div>
  </section>
 </main>
@@ -186,6 +174,9 @@ let user = null;
 let currentBox = null;
 let boxes = [];
 let publicMode = false;
+function isOwner() {
+ return !!(user && currentBox && user.id === currentBox.owner_id && !publicMode);
+}
 function notify(message,type="") {
  const el=$("notice");
  el.textContent=message;
@@ -196,8 +187,7 @@ function explainError(error,operation) {
  const msg=[error?.message,error?.details,error?.hint,error?.code]
   .filter(Boolean).join("\n");
  if (/row-level security|permission denied|42501/i.test(msg)) {
-  return operation+"失败：Supabase 数据库权限不允许此操作。\n"+
-   "当前公开访问策略可能尚未配置。\n"+msg;
+  return operation+"失败：Supabase 数据库权限不允许此操作。\n"+msg;
  }
  if (/boxes_theme_check|23514/i.test(msg)) {
   return operation+"失败：数据库主题约束不接受所选值。\n"+msg;
@@ -313,6 +303,9 @@ async function logout() {
   const {error}=await db.auth.signOut();
   if(error) throw error;
   user=null;
+  currentBox=null;
+  publicMode=false;
+  $("detailPanel").classList.add("hidden");
   showLoggedInPanels();
   $("boxesList").replaceChildren();
   notify("已退出登录。","ok");
@@ -440,6 +433,11 @@ async function openBox(box) {
  $("detailDescription").textContent=box.description||"";
  $("detailSlug").textContent="留言箱标识："+box.slug;
  $("shareResult").classList.add("hidden");
+ $("backBtn").classList.toggle("hidden",publicMode);
+ $("sharePanel").classList.toggle("hidden",publicMode);
+ $("replyHelp").textContent=isOwner()
+  ?"主人管理模式：你可以查看全部回复，包括隐藏的回复，并管理公开状态。"
+  :"欢迎留下回复。这里仅显示留言箱主人允许公开的回复。";
  enterDetailMode();
  await loadMessages();
  window.scrollTo({top:0,behavior:"smooth"});
@@ -459,19 +457,13 @@ async function openPublicBox(slug) {
    .eq("slug",slug).maybeSingle();
   if(error) throw error;
   if(!data) {
-   $("shareLoading").textContent=
-    "找不到这个留言箱，或者当前数据库权限不允许公开读取。";
+   $("shareLoading").textContent="找不到这个留言箱，或者当前数据库权限不允许公开读取。";
    return;
   }
   $("shareLanding").classList.add("hidden");
   await openBox(data);
-  $("backBtn").classList.add("hidden");
-  $("sharePanel").classList.add("hidden");
  } catch(e) {
-  $("shareLoading").textContent=
-   "无法打开留言箱。\n"+
-   "可能是数据库尚未允许匿名访客读取留言箱。\n"+
-   (e.message||"未知错误");
+  $("shareLoading").textContent="无法打开留言箱。\n"+(e.message||"未知错误");
  }
 }
 async function imageUrl(path) {
@@ -528,20 +520,24 @@ async function loadMessages() {
    showReplies.textContent="查看回复";
    showReplies.addEventListener("click",()=>loadReplies(m,replies));
    article.appendChild(showReplies);
-   if(user&&currentBox.owner_id===user.id&&!publicMode) {
-    const input=document.createElement("textarea");
-    input.maxLength=3000;
-    input.placeholder="作为留言箱主人，回复这封信……";
-    const send=document.createElement("button");
-    send.className="btn";
-    send.textContent="发送回复";
-    send.addEventListener("click",()=>sendReply(m,input,replies));
-    article.append(input,send);
-   }
+   // 所有人都能回复；只有主人才能管理已有回复。
+   const form=document.createElement("div");
+   form.className="reply-form";
+   const replyLabel=document.createElement("label");
+   replyLabel.textContent="写下你的回复";
+   const input=document.createElement("textarea");
+   input.maxLength=3000;
+   input.placeholder="想对这封信说些什么……";
+   const send=document.createElement("button");
+   send.className="btn full";
+   send.textContent="发送回复";
+   send.addEventListener("click",()=>sendReply(m,input,replies));
+   form.append(replyLabel,input,send);
+   article.appendChild(form);
    root.appendChild(article);
   }
  } catch(e) {
-  root.textContent="无法读取留言。请检查 Supabase 的公开读取权限。\n"+(e.message||"");
+  root.textContent="无法读取留言。\n"+(e.message||"未知错误");
  }
 }
 async function sendMessage() {
@@ -590,13 +586,19 @@ async function sendMessage() {
 async function loadReplies(message,root) {
  root.textContent="正在加载回复……";
  try {
+  // is_public 必须读取出来，供主人管理。
+  // 访客能读取哪些记录，最终由 Supabase RLS 决定。
   const {data,error}=await db.from("replies")
-   .select("id,box_id,message_id,content,created_at")
-   .eq("message_id",message.id).order("created_at",{ascending:true});
+   .select("id,box_id,message_id,content,created_at,is_public")
+   .eq("message_id",message.id)
+   .order("created_at",{ascending:true});
   if(error) throw error;
   root.replaceChildren();
   if(!data?.length) {
-   root.textContent="这封信还没有回复。";
+   const empty=document.createElement("div");
+   empty.className="empty";
+   empty.textContent="这封信暂时没有可显示的回复。";
+   root.appendChild(empty);
    return;
   }
   for(const r of data) {
@@ -608,6 +610,23 @@ async function loadReplies(message,root) {
    t.className="box-meta";
    t.textContent=new Date(r.created_at).toLocaleString();
    div.append(p,t);
+   if(isOwner()) {
+    const status=document.createElement("div");
+    status.className="box-meta "+(r.is_public?"status-public":"status-hidden");
+    status.textContent=r.is_public?"● 公开显示":"● 已隐藏";
+    const actions=document.createElement("div");
+    actions.className="reply-actions";
+    const toggle=document.createElement("button");
+    toggle.className="btn secondary";
+    toggle.textContent=r.is_public?"设为隐藏":"设为公开";
+    toggle.addEventListener("click",()=>toggleReplyVisibility(r,message,root));
+    const remove=document.createElement("button");
+    remove.className="btn danger";
+    remove.textContent="删除回复";
+    remove.addEventListener("click",()=>deleteReply(r,message,root));
+    actions.append(toggle,remove);
+    div.append(status,actions);
+   }
    root.appendChild(div);
   }
  } catch(e) {
@@ -616,14 +635,21 @@ async function loadReplies(message,root) {
 }
 async function sendReply(message,input,repliesRoot) {
  const content=input.value.trim();
- if(!content||!user||currentBox?.owner_id!==user.id) {
-  notify("请登录留言箱主人账号并填写回复。","error");
+ if(!content) {
+  notify("请先填写回复内容。","error");
+  return;
+ }
+ if(!currentBox) {
+  notify("请先打开留言箱。","error");
   return;
  }
  setBusy(true);
  try {
   const {error}=await db.from("replies").insert({
-   box_id:currentBox.id,message_id:message.id,content
+   box_id:currentBox.id,
+   message_id:message.id,
+   content,
+   is_public:true
   });
   if(error) throw error;
   input.value="";
@@ -635,7 +661,61 @@ async function sendReply(message,input,repliesRoot) {
   setBusy(false);
  }
 }
-$("themeBtn").addEventListener("click",()=>document.body.classList.toggle("dark"));
+async function toggleReplyVisibility(reply,message,root) {
+ if(!isOwner()) {
+  notify("只有留言箱主人可以修改回复公开状态。","error");
+  return;
+ }
+ const nextValue=!reply.is_public;
+ if(!confirm(nextValue?"确定公开这条回复吗？":"确定隐藏这条回复吗？")) return;
+ setBusy(true);
+ try {
+  const {data,error}=await db.from("replies")
+   .update({is_public:nextValue})
+   .eq("id",reply.id)
+   .eq("box_id",currentBox.id)
+   .select("id,is_public")
+   .maybeSingle();
+  if(error) throw error;
+  if(!data) {
+   throw new Error("没有更新记录。请检查主人身份、登录状态和数据库 UPDATE 策略。");
+  }
+  notify(nextValue?"回复已公开。":"回复已隐藏，访客将无法通过公开读取策略查看它。","ok");
+  await loadReplies(message,root);
+ } catch(e) {
+  notify(explainError(e,"修改回复公开状态"),"error");
+ } finally {
+  setBusy(false);
+ }
+}
+async function deleteReply(reply,message,root) {
+ if(!isOwner()) {
+  notify("只有留言箱主人可以删除回复。","error");
+  return;
+ }
+ if(!confirm("确定永久删除这条回复吗？删除后无法恢复。")) return;
+ setBusy(true);
+ try {
+  const {data,error}=await db.from("replies")
+   .delete()
+   .eq("id",reply.id)
+   .eq("box_id",currentBox.id)
+   .select("id");
+  if(error) throw error;
+  if(!data?.length) {
+   throw new Error("没有删除任何记录。请检查主人身份、登录状态和数据库 DELETE 策略。");
+  }
+  notify("回复已删除。","ok");
+  await loadReplies(message,root);
+ } catch(e) {
+  notify(explainError(e,"删除回复"),"error");
+ } finally {
+  setBusy(false);
+ }
+}
+$("themeBtn").addEventListener("click",()=>{
+ document.body.classList.toggle("dark");
+});
 $("registerBtn").addEventListener("click",register);
 $("loginBtn").addEventListener("click",login);
 $("logoutBtn").addEventListener("click",logout);
