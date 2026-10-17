@@ -2,765 +2,846 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#211633">
 <title>花花的星海信箱</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{
- --bg:#f7f1ff;--card:#fff;--text:#352547;--muted:#83758f;
- --primary:#9670d3;--soft:#eee4ff;--line:#e8dcf6;
- --shadow:0 12px 35px #49316a12
+:root {
+  --bg: #171020;
+  --card: #241932;
+  --card2: #30203f;
+  --text: #f8f0ff;
+  --muted: #bca9cb;
+  --accent: #d5a7ff;
+  --border: #493457;
+  --danger: #ff8caa;
 }
-body.dark{
- --bg:#15111e;--card:#211a2e;--text:#f5edff;--muted:#b8a9c8;
- --primary:#b69ae8;--soft:#332743;--line:#443451;
- --shadow:0 12px 35px #0003
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: radial-gradient(ellipse at top, #352044, var(--bg) 70%);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 100vh;
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-button:disabled{opacity:.5;cursor:not-allowed}
-.hero{position:relative;text-align:center;padding:48px 16px 35px;background:linear-gradient(135deg,#201633,#514075,#9276c9);color:white}
-.hero h1{font-size:clamp(25px,6vw,38px);margin:10px 0}
-.hero p{line-height:1.8;margin:8px auto}
-.tag{font-size:12px;letter-spacing:3px;opacity:.8}
-.top-actions{position:absolute;right:12px;top:12px}
-main{max-width:850px;margin:22px auto;padding:0 14px 40px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow)}
-.card h2{font-size:19px;margin:0 0 14px}
-.muted{color:var(--muted);font-size:13px;line-height:1.7}
-label{display:block;font-size:13px;margin:12px 0 5px;color:var(--muted)}
-input:not([type=checkbox]):not([type=file]),textarea,select{width:100%;padding:12px 13px;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:12px;outline:none}
-textarea{min-height:100px;resize:vertical}
-.btn{border:0;border-radius:12px;padding:12px 16px;background:var(--primary);color:white;font-weight:650}
-.btn.secondary{background:var(--soft);color:var(--text)}
-.btn.danger{background:#b9435c;color:white}
-.btn.full{width:100%;margin-top:10px}
-.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.btnrow .btn{flex:1}
-hr{border:0;border-top:1px solid var(--line);margin:18px 0}
-.hidden{display:none!important}
-.notice{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;padding:12px;border-radius:12px;background:var(--soft);margin:12px 0}
-.notice.error{background:#ffe9ee;color:#8e2741}
-.notice.ok{background:#e4f8ec;color:#226941}
-.box-item,.message,.reply{border:1px solid var(--line);border-radius:15px;padding:15px;margin:12px 0;background:var(--card);overflow-wrap:anywhere}
-.box-item h3{margin:0 0 8px}
-.box-item p,.message p,.reply p{line-height:1.8;white-space:pre-wrap}
-.box-meta{font-size:12px;color:var(--muted)}
-.message{background:var(--soft)}
-.message img{max-width:100%;max-height:400px;object-fit:contain;border-radius:12px}
-.message-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
-.reply{margin-left:12px;background:var(--bg)}
-.pill{display:inline-block;padding:4px 9px;border-radius:20px;background:var(--soft);font-size:12px}
-.empty{text-align:center;color:var(--muted);padding:24px 8px;line-height:2}
-footer{text-align:center;padding:10px 20px 32px;color:var(--muted);font-size:12px}
-.checkline{display:flex;align-items:center;gap:8px;margin:12px 0}
-.checkline input{width:18px;height:18px}
-.reply-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.reply-actions .btn{flex:1}
-.reply-form{margin:12px 0;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
-.status-public{color:#24804a}
-.status-hidden{color:#b9435c}
-@media(max-width:540px){
- .hero{padding-top:58px}
- .card{padding:16px;border-radius:16px}
- .btnrow{flex-direction:column}
- .btnrow .btn{width:100%}
- .reply-actions{flex-direction:column}
+button, input, textarea, select { font: inherit; }
+button {
+  border: 0;
+  border-radius: 12px;
+  padding: 10px 14px;
+  background: var(--accent);
+  color: #281634;
+  font-weight: 700;
+  cursor: pointer;
 }
+button:disabled { opacity: .5; cursor: not-allowed; }
+button.secondary {
+  background: var(--card2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+button.danger { background: #5b293e; color: #ffe2eb; }
+button.small { padding: 7px 10px; font-size: 13px; }
+input, textarea, select {
+  width: 100%;
+  background: #191121;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  outline: none;
+}
+textarea { resize: vertical; min-height: 90px; }
+label { display: block; color: var(--muted); font-size: 13px; margin-bottom: 6px; }
+h1, h2, h3 { margin-top: 0; }
+p { line-height: 1.65; overflow-wrap: anywhere; }
+.hidden { display: none !important; }
+.muted { color: var(--muted); font-size: 13px; }
+header {
+  max-width: 900px;
+  margin: auto;
+  padding: 24px 18px 10px;
+  text-align: center;
+}
+header h1 { margin-bottom: 6px; color: #e8caff; }
+main { max-width: 760px; margin: auto; padding: 12px 16px 60px; }
+.card {
+  background: rgba(36,25,50,.95);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 17px;
+  margin: 14px 0;
+  box-shadow: 0 10px 30px #0002;
+}
+.stack { display: grid; gap: 12px; }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.row > .grow { flex: 1; min-width: 150px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.message-content { white-space: pre-wrap; overflow-wrap: anywhere; }
+.message-image { display: block; max-width: 100%; max-height: 350px; border-radius: 12px; margin-top: 12px; }
+.reply-area {
+  margin-top: 14px;
+  padding: 13px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #1b1325;
+}
+.reply-item {
+  border-left: 3px solid #b88de6;
+  padding: 10px 12px;
+  margin: 10px 0;
+  background: #291c37;
+  border-radius: 0 10px 10px 0;
+}
+.reply-item p { white-space: pre-wrap; margin: 7px 0; }
+.reply-meta { font-size: 12px; color: var(--muted); }
+.status { margin: 12px 0; color: var(--accent); overflow-wrap: anywhere; }
+#toast {
+  position: fixed;
+  left: 50%;
+  bottom: 25px;
+  transform: translateX(-50%);
+  background: #f5e8ff;
+  color: #291735;
+  border-radius: 12px;
+  padding: 12px 16px;
+  max-width: 90%;
+  z-index: 20;
+  box-shadow: 0 6px 25px #0005;
+}
+footer { text-align: center; padding: 20px; color: var(--muted); font-size: 12px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 15px 0; }
 </style>
 </head>
 <body>
-<header class="hero">
- <div class="top-actions">
-  <button class="btn" id="themeBtn">☾ 主题</button>
- </div>
- <div class="tag">HUA CHEN YU · STAR LETTERS</div>
- <h1>🌌 花花的星海信箱</h1>
- <p>把想说的话，寄往星光所在的地方。</p>
- <p class="tag">愿每一份心意，都能在星海中被看见。</p>
+<header>
+  <h1>✦ 花花的星海信箱 ✦</h1>
+  <p class="muted">把想说的话，寄往星海深处。</p>
 </header>
+
 <main>
- <div id="notice" class="notice hidden" role="status" aria-live="polite"></div>
- <section class="card hidden" id="shareLanding">
-  <h2>🌌 你收到了一封星海邀请</h2>
-  <p class="muted">正在打开好友分享的专属留言箱。</p>
-  <div id="shareLoading" class="empty">正在寻找这片星海……</div>
- </section>
- <section class="card" id="authPanel">
-  <h2>✦ 来自星海的访客</h2>
-  <p class="muted">登录后创建和管理自己的留言箱。</p>
-  <label for="email">邮箱</label>
-  <input id="email" type="email" autocomplete="email" placeholder="name@example.com">
-  <label for="password">密码</label>
-  <input id="password" type="password" autocomplete="current-password" placeholder="至少 6 位">
-  <div class="btnrow">
-   <button class="btn" id="registerBtn">创建账号</button>
-   <button class="btn secondary" id="loginBtn">登录</button>
-  </div>
- </section>
- <section class="card hidden" id="accountPanel">
-  <h2>✦ 我的星海</h2>
-  <p id="accountLabel" class="muted"></p>
-  <div class="btnrow">
-   <button class="btn secondary" id="refreshBtn">刷新</button>
-   <button class="btn secondary" id="logoutBtn">退出登录</button>
-  </div>
- </section>
- <section class="card hidden" id="createPanel">
-  <h2>✦ 创建自己的留言箱</h2>
-  <label for="boxTitle">留言箱名称</label>
-  <input id="boxTitle" maxlength="100" placeholder="例如：花花的星海信箱">
-  <label for="boxDescription">留言箱介绍</label>
-  <textarea id="boxDescription" maxlength="1000" placeholder="写一段介绍……"></textarea>
-  <label for="boxTheme">星海主题</label>
-  <select id="boxTheme">
-   <option value="huachen">华晨宇 · 星海紫</option>
-   <option value="moon">月光银</option>
-   <option value="dream">梦境粉</option>
-  </select>
-  <button class="btn full" id="createBoxBtn">✨ 创建留言箱</button>
- </section>
- <section class="card hidden" id="boxesPanel">
-  <h2>✦ 我的留言箱</h2>
-  <div id="boxesList"><div class="empty">正在寻找星海……</div></div>
- </section>
- <section class="card hidden" id="detailPanel">
-  <button class="btn secondary" id="backBtn">← 返回留言箱列表</button>
-  <hr>
-  <h2 id="detailTitle">星海留言</h2>
-  <p id="detailDescription" class="muted"></p>
-  <div class="pill" id="detailSlug"></div>
-  <section class="card" id="sharePanel" style="margin-top:16px">
-   <h2>📨 将留言箱发给好友</h2>
-   <p class="muted">生成专属链接，好友打开后进入这个留言箱。</p>
-   <button class="btn full" id="shareBtn">📨 将留言箱发给好友</button>
-   <div id="shareResult" class="hidden">
-    <label for="shareUrl">专属分享链接</label>
-    <input id="shareUrl" type="url" readonly>
-    <button class="btn secondary full" id="copyShareBtn">复制链接</button>
-   </div>
+  <div id="status" class="status" role="status">正在连接星海……</div>
+
+  <section id="authPanel" class="card">
+    <h2>主人登录 / 注册</h2>
+    <p class="muted">留言箱主人可以登录管理自己的信箱。</p>
+    <div class="stack">
+      <div>
+        <label for="email">邮箱</label>
+        <input id="email" type="email" autocomplete="email" placeholder="请输入邮箱">
+      </div>
+      <div>
+        <label for="password">密码</label>
+        <input id="password" type="password" autocomplete="current-password" placeholder="请输入密码">
+      </div>
+      <div class="row">
+        <button id="loginBtn">登录</button>
+        <button id="registerBtn" class="secondary">注册</button>
+        <button id="logoutBtn" class="secondary hidden">退出登录</button>
+      </div>
+      <p id="authInfo" class="muted"></p>
+    </div>
   </section>
-  <hr>
-  <h2>✉️ 写下一封信</h2>
-  <label for="nickname">留言昵称</label>
-  <input id="nickname" maxlength="40" placeholder="星友">
-  <label class="checkline">
-   <input id="anonymous" type="checkbox" checked> 匿名留言
-  </label>
-  <label for="messageContent">留言内容</label>
-  <textarea id="messageContent" maxlength="5000" placeholder="想说的话，都可以写在这里……"></textarea>
-  <label for="imageFile">附上一张图片（可选，最大 5 MB）</label>
-  <input id="imageFile" type="file" accept="image/*">
-  <button class="btn full" id="sendBtn">将信寄往星海</button>
-  <hr>
-  <h2>💫 留言星河</h2>
-  <p class="muted" id="replyHelp">可以查看公开回复，也可以给留言留下回复。</p>
-  <div id="messagesList"><div class="empty">加载留言中……</div></div>
- </section>
+
+  <section id="ownerPanel" class="card hidden">
+    <h2>我的留言箱</h2>
+    <div class="stack">
+      <div>
+        <label for="boxTitle">留言箱名称</label>
+        <input id="boxTitle" maxlength="80" placeholder="例如：花花的星海信箱">
+      </div>
+      <div>
+        <label for="boxDescription">留言箱介绍</label>
+        <textarea id="boxDescription" maxlength="500" placeholder="写下一段介绍……"></textarea>
+      </div>
+      <div>
+        <label for="boxTheme">主题</label>
+        <select id="boxTheme">
+          <option value="star">星海紫</option>
+          <option value="pink">樱花粉</option>
+          <option value="blue">深海蓝</option>
+        </select>
+      </div>
+      <div class="row">
+        <button id="createBoxBtn">创建留言箱</button>
+        <button id="refreshBoxesBtn" class="secondary">刷新列表</button>
+      </div>
+    </div>
+    <hr>
+    <div id="boxesList"></div>
+  </section>
+
+  <section id="boxPanel" class="hidden">
+    <div class="card">
+      <div class="row">
+        <div class="grow">
+          <h2 id="currentBoxTitle">星海信箱</h2>
+          <p id="currentBoxDescription" class="muted"></p>
+        </div>
+        <button id="backBtn" class="secondary hidden">返回</button>
+      </div>
+      <div id="shareArea" class="hidden">
+        <label>分享链接</label>
+        <div class="row">
+          <input id="shareUrl" readonly>
+          <button id="copyShareBtn">复制</button>
+        </div>
+        <p class="muted">只有公开的留言箱才能通过分享链接访问。</p>
+      </div>
+    </div>
+
+    <section id="writePanel" class="card">
+      <h3>✉ 写一封留言</h3>
+      <div class="stack">
+        <div>
+          <label for="nickname">昵称（可选）</label>
+          <input id="nickname" maxlength="40" placeholder="给自己起个名字">
+        </div>
+        <label class="row">
+          <input id="anonymous" type="checkbox" style="width:auto">
+          匿名留言
+        </label>
+        <div>
+          <label for="messageContent">留言内容</label>
+          <textarea id="messageContent" maxlength="5000" placeholder="想说的话……"></textarea>
+        </div>
+        <div>
+          <label for="messageImage">图片（可选）</label>
+          <input id="messageImage" type="file" accept="image/*">
+        </div>
+        <button id="sendMessageBtn">发送留言</button>
+      </div>
+    </section>
+
+    <div class="row">
+      <h2 class="grow">星海来信</h2>
+      <button id="refreshMessagesBtn" class="secondary">刷新留言</button>
+    </div>
+    <div id="messagesList"></div>
+  </section>
 </main>
-<footer>花晨月夕，星海有信。<br>非官方粉丝交流页面。</footer>
+
+<footer>愿每一封信，都有人认真读完。</footer>
+<div id="toast" class="hidden"></div>
+
 <script>
-(() => {
 "use strict";
+
 const SUPABASE_URL = "https://aerhvafsvrfvazhfczwp.supabase.co";
 const SUPABASE_KEY = "sb_publishable_cZQ01zJYmuQnM44wepgmow_fgJcNoy-";
-const BUCKET = "message-images";
-const $ = id => document.getElementById(id);
-let db = null;
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 let user = null;
 let currentBox = null;
-let boxes = [];
 let publicMode = false;
+let toastTimer = null;
+
+const $ = id => document.getElementById(id);
+
+function notify(message, error = false) {
+  const el = $("toast");
+  el.textContent = message;
+  el.style.background = error ? "#ffdce5" : "#f5e8ff";
+  el.classList.remove("hidden");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.add("hidden"), 3500);
+}
+
+function setStatus(message) {
+  $("status").textContent = message;
+}
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[ch]);
+}
+
+function formatDate(value) {
+  if (!value) return "";
+  const d = new Date(value);
+  return Number.isNaN(d.getTime()) ? "" : d.toLocaleString();
+}
+
 function isOwner() {
- return !!(user && currentBox && user.id === currentBox.owner_id && !publicMode);
+  return Boolean(user && currentBox &&
+    user.id === currentBox.owner_id && !publicMode);
 }
-function notify(message,type="") {
- const el=$("notice");
- el.textContent=message;
- el.className="notice"+(type?" "+type:"");
- el.classList.remove("hidden");
+
+function updateAuthUI() {
+  $("authInfo").textContent = user ? "已登录：" + user.email : "尚未登录";
+  $("logoutBtn").classList.toggle("hidden", !user);
+  $("ownerPanel").classList.toggle("hidden", !user);
+  $("authPanel").classList.remove("hidden");
+  if (user) loadBoxes();
 }
-function explainError(error,operation) {
- const msg=[error?.message,error?.details,error?.hint,error?.code]
-  .filter(Boolean).join("\n");
- if (/row-level security|permission denied|42501/i.test(msg)) {
-  return operation+"失败：Supabase 数据库权限不允许此操作。\n"+msg;
- }
- if (/boxes_theme_check|23514/i.test(msg)) {
-  return operation+"失败：数据库主题约束不接受所选值。\n"+msg;
- }
- return operation+"失败：\n"+(msg||"未知错误");
-}
-function setBusy(value) {
- document.querySelectorAll("button").forEach(b=>b.disabled=value);
-}
-function slugify() {
- return "star-"+crypto.randomUUID().replaceAll("-","").slice(0,16);
-}
-function makeShareUrl(box) {
- const url=new URL(window.location.href);
- url.search="";
- url.hash="";
- url.searchParams.set("box",box.slug);
- return url.toString();
-}
-function showShareLink(box) {
- $("shareUrl").value=makeShareUrl(box);
- $("shareResult").classList.remove("hidden");
-}
-async function shareBox() {
- if (!currentBox) return;
- const link=makeShareUrl(currentBox);
- $("shareUrl").value=link;
- $("shareResult").classList.remove("hidden");
- try {
-  if (navigator.share) {
-   await navigator.share({
-    title:currentBox.title,
-    text:currentBox.description||"欢迎来到我的星海信箱！",
-    url:link
-   });
-  } else {
-   await copyLink();
-  }
- } catch(e) {
-  if (e.name!=="AbortError") {
-   notify("分享链接已生成，请点击「复制链接」。","ok");
-  }
- }
-}
-async function copyLink() {
- const input=$("shareUrl");
- if (!input.value && currentBox) showShareLink(currentBox);
- try {
-  await navigator.clipboard.writeText(input.value);
-  notify("复制成功！可以粘贴到微信聊天中。","ok");
- } catch(e) {
-  input.focus();
-  input.select();
-  notify("请长按选中的链接并选择复制。","ok");
- }
-}
-function showLoggedInPanels() {
- $("authPanel").classList.toggle("hidden",!!user);
- $("accountPanel").classList.toggle("hidden",!user);
- $("createPanel").classList.toggle("hidden",!user);
- $("boxesPanel").classList.toggle("hidden",!user);
- $("accountLabel").textContent=user?"已登录："+user.email:"";
-}
+
 async function register() {
- const email=$("email").value.trim();
- const password=$("password").value;
- if (!email||password.length<6) {
-  notify("请填写有效邮箱和至少 6 位密码。","error");
-  return;
- }
- setBusy(true);
- try {
-  const {data,error}=await db.auth.signUp({email,password});
-  if(error) throw error;
-  if(data.session) {
-   user=data.user;
-   showLoggedInPanels();
-   await loadBoxes();
-   notify("注册成功！","ok");
-  } else {
-   notify("注册请求已提交，请检查邮箱并完成验证。","ok");
+  const email = $("email").value.trim();
+  const password = $("password").value;
+  if (!email || password.length < 6) {
+    notify("请输入邮箱和至少 6 位密码。", true);
+    return;
   }
- } catch(e) {
-  notify(explainError(e,"注册"),"error");
- } finally {
-  setBusy(false);
- }
+  const { error } = await db.auth.signUp({ email, password });
+  if (error) return notify(error.message, true);
+  notify("注册请求已提交。如果启用了邮箱验证，请先打开验证邮件。");
 }
+
 async function login() {
- const email=$("email").value.trim();
- const password=$("password").value;
- if(!email||!password) {
-  notify("请填写邮箱和密码。","error");
-  return;
- }
- setBusy(true);
- try {
-  const {data,error}=await db.auth.signInWithPassword({email,password});
-  if(error) throw error;
-  user=data.user;
-  showLoggedInPanels();
-  await loadBoxes();
-  notify("登录成功！","ok");
- } catch(e) {
-  notify(explainError(e,"登录"),"error");
- } finally {
-  setBusy(false);
- }
+  const email = $("email").value.trim();
+  const password = $("password").value;
+  if (!email || !password) return notify("请填写邮箱和密码。", true);
+  const { data, error } = await db.auth.signInWithPassword({ email, password });
+  if (error) return notify(error.message, true);
+  user = data.user;
+  publicMode = false;
+  updateAuthUI();
+  notify("登录成功。");
+  const params = new URLSearchParams(location.search);
+  const slug = params.get("box");
+  if (slug) await openPublicBox(slug);
 }
+
 async function logout() {
- setBusy(true);
- try {
-  const {error}=await db.auth.signOut();
-  if(error) throw error;
-  user=null;
-  currentBox=null;
-  publicMode=false;
-  $("detailPanel").classList.add("hidden");
-  showLoggedInPanels();
-  $("boxesList").replaceChildren();
-  notify("已退出登录。","ok");
- } catch(e) {
-  notify(explainError(e,"退出登录"),"error");
- } finally {
-  setBusy(false);
- }
+  await db.auth.signOut();
+  user = null;
+  currentBox = null;
+  publicMode = false;
+  $("boxPanel").classList.add("hidden");
+  $("ownerPanel").classList.add("hidden");
+  $("logoutBtn").classList.add("hidden");
+  $("authInfo").textContent = "尚未登录";
+  notify("已退出登录。");
 }
-async function loadBoxes() {
- if(!user) return;
- $("boxesList").textContent="正在加载留言箱……";
- try {
-  const {data,error}=await db.from("boxes")
-   .select("id,owner_id,slug,title,description,theme,created_at")
-   .eq("owner_id",user.id)
-   .order("created_at",{ascending:false});
-  if(error) throw error;
-  boxes=data||[];
-  renderBoxes();
- } catch(e) {
-  $("boxesList").textContent="";
-  notify(explainError(e,"加载留言箱"),"error");
- }
-}
-function renderBoxes() {
- const root=$("boxesList");
- root.replaceChildren();
- if(!boxes.length) {
-  const empty=document.createElement("div");
-  empty.className="empty";
-  empty.textContent="这里还没有留言箱。\n创建你的第一个星海留言箱吧 ✨";
-  root.appendChild(empty);
-  return;
- }
- for(const box of boxes) {
-  const article=document.createElement("article");
-  article.className="box-item";
-  const title=document.createElement("h3");
-  title.textContent="🌌 "+box.title;
-  const desc=document.createElement("p");
-  desc.textContent=box.description||"把想说的话，寄往星光所在的地方。";
-  const meta=document.createElement("div");
-  meta.className="box-meta";
-  meta.textContent="主题："+box.theme;
-  const open=document.createElement("button");
-  open.className="btn full";
-  open.textContent="打开留言箱";
-  open.addEventListener("click",()=>openBox(box));
-  const share=document.createElement("button");
-  share.className="btn secondary full";
-  share.textContent="📨 将留言箱发给好友";
-  share.addEventListener("click",async()=>{
-   await openBox(box);
-   showShareLink(box);
-   $("sharePanel").scrollIntoView({behavior:"smooth",block:"center"});
-  });
-  article.append(title,desc,meta,open,share);
-  root.appendChild(article);
- }
-}
-async function insertBoxWithCompatibleTheme(record) {
- const candidates=[...new Set([
-  record.theme,"huachen","moon","dream","purple","blue","pink",
-  "default","light","dark","star"
- ])];
- for(const theme of candidates) {
-  const {data,error}=await db.from("boxes")
-   .insert({...record,theme}).select("*").single();
-  if(!error) return data;
-  if(error.code!=="23514"||!/boxes_theme_check/i.test(error.message||"")) {
-   throw error;
-  }
- }
- const {data,error}=await db.from("boxes").insert({
-  owner_id:record.owner_id,slug:record.slug,
-  title:record.title,description:record.description
- }).select("*").single();
- if(error) throw error;
- return data;
-}
+
 async function createBox() {
- if(!user) {
-  notify("请先登录。","error");
-  return;
- }
- const title=$("boxTitle").value.trim();
- if(!title) {
-  notify("请填写留言箱名称。","error");
-  return;
- }
- setBusy(true);
- try {
-  const box=await insertBoxWithCompatibleTheme({
-   owner_id:user.id,
-   slug:slugify(),
-   title,
-   description:$("boxDescription").value.trim()||
-    "把想说的话，寄往星光所在的地方。",
-   theme:$("boxTheme").value
-  });
-  $("boxTitle").value="";
-  $("boxDescription").value="";
+  if (!user) return notify("请先登录。", true);
+  const title = $("boxTitle").value.trim();
+  if (!title) return notify("请填写留言箱名称。", true);
+
+  const slug = "star-" + crypto.randomUUID().replaceAll("-", "").slice(0, 16);
+  const { data, error } = await db.from("boxes").insert({
+    owner_id: user.id,
+    slug,
+    title,
+    description: $("boxDescription").value.trim(),
+    theme: $("boxTheme").value,
+    is_public: true
+  }).select().single();
+
+  if (error) {
+    console.error(error);
+    return notify("创建失败：" + error.message, true);
+  }
+
+  notify("留言箱创建成功。");
   await loadBoxes();
-  await openBox(box);
-  showShareLink(box);
-  notify("留言箱创建成功！专属分享链接已生成。","ok");
- } catch(e) {
-  notify(explainError(e,"创建留言箱"),"error");
- } finally {
-  setBusy(false);
- }
+  await openOwnerBox(data);
 }
-function enterDetailMode() {
- $("authPanel").classList.add("hidden");
- $("accountPanel").classList.add("hidden");
- $("createPanel").classList.add("hidden");
- $("boxesPanel").classList.add("hidden");
- $("detailPanel").classList.remove("hidden");
- $("shareLanding").classList.add("hidden");
-}
-async function openBox(box) {
- currentBox=box;
- $("detailTitle").textContent=box.title;
- $("detailDescription").textContent=box.description||"";
- $("detailSlug").textContent="留言箱标识："+box.slug;
- $("shareResult").classList.add("hidden");
- $("backBtn").classList.toggle("hidden",publicMode);
- $("sharePanel").classList.toggle("hidden",publicMode);
- $("replyHelp").textContent=isOwner()
-  ?"主人管理模式：你可以查看全部回复，包括隐藏的回复，并管理公开状态。"
-  :"欢迎留下回复。这里仅显示留言箱主人允许公开的回复。";
- enterDetailMode();
- await loadMessages();
- window.scrollTo({top:0,behavior:"smooth"});
-}
-async function openPublicBox(slug) {
- publicMode=true;
- $("shareLanding").classList.remove("hidden");
- $("authPanel").classList.add("hidden");
- $("accountPanel").classList.add("hidden");
- $("createPanel").classList.add("hidden");
- $("boxesPanel").classList.add("hidden");
- $("detailPanel").classList.add("hidden");
- $("shareLoading").textContent="正在读取留言箱……";
- try {
-  const {data,error}=await db.from("boxes")
-   .select("id,owner_id,slug,title,description,theme,created_at")
-   .eq("slug",slug).maybeSingle();
-  if(error) throw error;
-  if(!data) {
-   $("shareLoading").textContent="找不到这个留言箱，或者当前数据库权限不允许公开读取。";
-   return;
+
+async function loadBoxes() {
+  if (!user) return;
+  const { data, error } = await db.from("boxes")
+    .select("id,owner_id,slug,title,description,theme,is_public,created_at")
+    .eq("owner_id", user.id)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    $("boxesList").textContent = "读取留言箱失败：" + error.message;
+    return;
   }
-  $("shareLanding").classList.add("hidden");
-  await openBox(data);
- } catch(e) {
-  $("shareLoading").textContent="无法打开留言箱。\n"+(e.message||"未知错误");
- }
-}
-async function imageUrl(path) {
- if(/^https?:\/\//i.test(path)) return path;
- const {data,error}=await db.storage.from(BUCKET).createSignedUrl(path,3600);
- if(!error&&data?.signedUrl) return data.signedUrl;
- const {data:pub}=db.storage.from(BUCKET).getPublicUrl(path);
- return pub?.publicUrl||"";
-}
-async function loadMessages() {
- if(!currentBox) return;
- const root=$("messagesList");
- root.textContent="正在读取留言……";
- try {
-  const {data,error}=await db.from("messages")
-   .select("id,box_id,nickname,anonymous,content,image_path,created_at")
-   .eq("box_id",currentBox.id)
-   .order("created_at",{ascending:false}).limit(100);
-  if(error) throw error;
+
+  const root = $("boxesList");
   root.replaceChildren();
-  if(!data?.length) {
-   const empty=document.createElement("div");
-   empty.className="empty";
-   empty.textContent="星海暂时很安静。\n成为第一个寄出心意的人吧。";
-   root.appendChild(empty);
-   return;
+
+  if (!data || !data.length) {
+    root.textContent = "你还没有留言箱，可以创建一个。";
+    return;
   }
-  for(const m of data) {
-   const article=document.createElement("article");
-   article.className="message";
-   const head=document.createElement("div");
-   head.className="message-head";
-   const name=document.createElement("strong");
-   name.textContent=m.anonymous?"匿名星友":(m.nickname||"星友");
-   const time=document.createElement("span");
-   time.className="box-meta";
-   time.textContent=new Date(m.created_at).toLocaleString();
-   head.append(name,time);
-   const content=document.createElement("p");
-   content.textContent=m.content||"";
-   article.append(head,content);
-   if(m.image_path) {
-    const img=document.createElement("img");
-    img.alt="留言图片";
-    img.loading="lazy";
-    img.src=await imageUrl(m.image_path);
-    article.appendChild(img);
-   }
-   const replies=document.createElement("div");
-   replies.className="replies";
-   article.appendChild(replies);
-   const showReplies=document.createElement("button");
-   showReplies.className="btn secondary";
-   showReplies.textContent="查看回复";
-   showReplies.addEventListener("click",()=>loadReplies(m,replies));
-   article.appendChild(showReplies);
-   // 所有人都能回复；只有主人才能管理已有回复。
-   const form=document.createElement("div");
-   form.className="reply-form";
-   const replyLabel=document.createElement("label");
-   replyLabel.textContent="写下你的回复";
-   const input=document.createElement("textarea");
-   input.maxLength=3000;
-   input.placeholder="想对这封信说些什么……";
-   const send=document.createElement("button");
-   send.className="btn full";
-   send.textContent="发送回复";
-   send.addEventListener("click",()=>sendReply(m,input,replies));
-   form.append(replyLabel,input,send);
-   article.appendChild(form);
-   root.appendChild(article);
-  }
- } catch(e) {
-  root.textContent="无法读取留言。\n"+(e.message||"未知错误");
- }
-}
-async function sendMessage() {
- if(!currentBox) return;
- const content=$("messageContent").value.trim();
- if(!content) {
-  notify("请先写下留言内容。","error");
-  return;
- }
- const file=$("imageFile").files[0];
- if(file&&(!file.type.startsWith("image/")||file.size>5*1024*1024)) {
-  notify("请上传图片格式的文件，且大小不能超过 5 MB。","error");
-  return;
- }
- setBusy(true);
- try {
-  let imagePath=null;
-  if(file) {
-   const ext=(file.name.split(".").pop()||"jpg").replace(/[^a-z0-9]/gi,"");
-   const path="messages/"+crypto.randomUUID()+"."+ext;
-   const {data,error}=await db.storage.from(BUCKET).upload(path,file,{
-    upsert:false,contentType:file.type
-   });
-   if(error) throw error;
-   imagePath=data.path;
-  }
-  const anonymous=$("anonymous").checked;
-  const {error}=await db.from("messages").insert({
-   box_id:currentBox.id,
-   nickname:anonymous?"匿名访客":($("nickname").value.trim()||"星友"),
-   anonymous,
-   content,
-   image_path:imagePath
+
+  data.forEach(box => {
+    const card = document.createElement("div");
+    card.className = "reply-item";
+
+    const title = document.createElement("strong");
+    title.textContent = box.title || "未命名留言箱";
+
+    const info = document.createElement("p");
+    info.className = "muted";
+    info.textContent = box.is_public ? "公开状态：开启" : "公开状态：关闭";
+
+    const open = document.createElement("button");
+    open.textContent = "打开并管理";
+    open.onclick = () => openOwnerBox(box);
+
+    const share = document.createElement("button");
+    share.className = "secondary";
+    share.textContent = "复制分享链接";
+    share.onclick = async () => {
+      const url = location.origin + location.pathname + "?box=" + encodeURIComponent(box.slug);
+      try {
+        await navigator.clipboard.writeText(url);
+        notify("分享链接已复制。");
+      } catch {
+        prompt("复制以下分享链接：", url);
+      }
+    };
+
+    const visibility = document.createElement("button");
+    visibility.className = "secondary";
+    visibility.textContent = box.is_public ? "关闭公开" : "设为公开";
+    visibility.onclick = () => setBoxVisibility(box, !box.is_public);
+
+    card.append(title, info, open, document.createTextNode(" "), share,
+      document.createTextNode(" "), visibility);
+    root.appendChild(card);
   });
-  if(error) throw error;
-  $("messageContent").value="";
-  $("imageFile").value="";
-  notify("留言已寄出！","ok");
+}
+
+async function setBoxVisibility(box, nextValue) {
+  if (!user || box.owner_id !== user.id) return notify("没有管理权限。", true);
+
+  const { data, error } = await db.from("boxes")
+    .update({ is_public: nextValue })
+    .eq("id", box.id)
+    .eq("owner_id", user.id)
+    .select("id,is_public")
+    .maybeSingle();
+
+  if (error) return notify("修改失败：" + error.message, true);
+  if (!data) return notify("修改失败：数据库没有确认更新，请检查 RLS 策略。", true);
+
+  notify(nextValue ? "留言箱已公开。" : "留言箱已关闭公开。");
+  await loadBoxes();
+
+  if (currentBox && currentBox.id === box.id) {
+    currentBox.is_public = nextValue;
+    updateBoxHeader();
+  }
+}
+
+async function openOwnerBox(box) {
+  currentBox = box;
+  publicMode = false;
+  $("boxPanel").classList.remove("hidden");
+  $("backBtn").classList.remove("hidden");
+  $("shareArea").classList.remove("hidden");
+  $("writePanel").classList.remove("hidden");
+  updateBoxHeader();
   await loadMessages();
- } catch(e) {
-  notify(explainError(e,"发送留言"),"error");
- } finally {
-  setBusy(false);
- }
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
-async function loadReplies(message,root) {
- root.textContent="正在加载回复……";
- try {
-  // is_public 必须读取出来，供主人管理。
-  // 访客能读取哪些记录，最终由 Supabase RLS 决定。
-  const {data,error}=await db.from("replies")
-   .select("id,box_id,message_id,content,created_at,is_public")
-   .eq("message_id",message.id)
-   .order("created_at",{ascending:true});
-  if(error) throw error;
+
+async function openPublicBox(slug) {
+  const { data, error } = await db.from("boxes")
+    .select("id,owner_id,slug,title,description,theme,is_public,created_at")
+    .eq("slug", slug)
+    .eq("is_public", true)
+    .maybeSingle();
+
+  if (error || !data) {
+    setStatus("无法打开留言箱。请检查留言箱是否公开，以及 Supabase 读取权限。");
+    console.error(error);
+    return;
+  }
+
+  currentBox = data;
+  publicMode = true;
+  $("boxPanel").classList.remove("hidden");
+  $("backBtn").classList.add("hidden");
+  $("shareArea").classList.add("hidden");
+  $("writePanel").classList.remove("hidden");
+  $("ownerPanel").classList.add("hidden");
+  updateBoxHeader();
+  await loadMessages();
+}
+
+function updateBoxHeader() {
+  if (!currentBox) return;
+  $("currentBoxTitle").textContent = currentBox.title || "星海信箱";
+  $("currentBoxDescription").textContent = currentBox.description || "";
+  $("shareUrl").value = location.origin + location.pathname +
+    "?box=" + encodeURIComponent(currentBox.slug);
+}
+
+async function loadMessages() {
+  if (!currentBox) return;
+
+  const root = $("messagesList");
   root.replaceChildren();
-  if(!data?.length) {
-   const empty=document.createElement("div");
-   empty.className="empty";
-   empty.textContent="这封信暂时没有可显示的回复。";
-   root.appendChild(empty);
-   return;
+  const loading = document.createElement("p");
+  loading.className = "muted";
+  loading.textContent = "正在读取留言……";
+  root.appendChild(loading);
+
+  const { data, error } = await db.from("messages")
+    .select("id,box_id,nickname,anonymous,content,image_path,created_at")
+    .eq("box_id", currentBox.id)
+    .order("created_at", { ascending: false });
+
+  root.replaceChildren();
+
+  if (error) {
+    console.error(error);
+    root.textContent = "读取留言失败：" + error.message;
+    return;
   }
-  for(const r of data) {
-   const div=document.createElement("div");
-   div.className="reply";
-   const p=document.createElement("p");
-   p.textContent=r.content;
-   const t=document.createElement("div");
-   t.className="box-meta";
-   t.textContent=new Date(r.created_at).toLocaleString();
-   div.append(p,t);
-   if(isOwner()) {
-    const status=document.createElement("div");
-    status.className="box-meta "+(r.is_public?"status-public":"status-hidden");
-    status.textContent=r.is_public?"● 公开显示":"● 已隐藏";
-    const actions=document.createElement("div");
-    actions.className="reply-actions";
-    const toggle=document.createElement("button");
-    toggle.className="btn secondary";
-    toggle.textContent=r.is_public?"设为隐藏":"设为公开";
-    toggle.addEventListener("click",()=>toggleReplyVisibility(r,message,root));
-    const remove=document.createElement("button");
-    remove.className="btn danger";
-    remove.textContent="删除回复";
-    remove.addEventListener("click",()=>deleteReply(r,message,root));
-    actions.append(toggle,remove);
-    div.append(status,actions);
-   }
-   root.appendChild(div);
+
+  if (!data || !data.length) {
+    root.textContent = "这里还没有留言，写下第一封信吧。";
+    return;
   }
- } catch(e) {
-  root.textContent="无法读取回复："+(e.message||"未知错误");
- }
+
+  for (const message of data) {
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const heading = document.createElement("div");
+    heading.className = "row";
+
+    const author = document.createElement("strong");
+    author.className = "grow";
+    author.textContent = message.anonymous
+      ? "匿名访客"
+      : (message.nickname || "星海访客");
+
+    const date = document.createElement("span");
+    date.className = "muted";
+    date.textContent = formatDate(message.created_at);
+    heading.append(author, date);
+
+    const content = document.createElement("p");
+    content.className = "message-content";
+    content.textContent = message.content || "";
+
+    card.append(heading, content);
+
+    if (message.image_path) {
+      const image = document.createElement("img");
+      image.className = "message-image";
+      image.alt = "留言图片";
+      image.loading = "lazy";
+
+      const { data: imageData } = db.storage
+        .from("message-images")
+        .getPublicUrl(message.image_path);
+
+      image.src = imageData.publicUrl;
+      card.appendChild(image);
+    }
+
+    const actions = document.createElement("div");
+    actions.className = "actions";
+
+    // 关键修复：每条留言都明确创建“查看回复”按钮。
+    const toggleReplies = document.createElement("button");
+    toggleReplies.className = "secondary";
+    toggleReplies.type = "button";
+    toggleReplies.textContent = "查看回复";
+    actions.appendChild(toggleReplies);
+
+    const replyArea = document.createElement("section");
+    replyArea.className = "reply-area hidden";
+
+    const replyList = document.createElement("div");
+    replyList.className = "reply-list";
+
+    const replyForm = document.createElement("div");
+    replyForm.className = "stack";
+
+    const replyInput = document.createElement("textarea");
+    replyInput.maxLength = 3000;
+    replyInput.placeholder = "写下你的回复……";
+
+    const sendReplyBtn = document.createElement("button");
+    sendReplyBtn.type = "button";
+    sendReplyBtn.textContent = "发送回复";
+
+    replyForm.append(replyInput, sendReplyBtn);
+    replyArea.append(replyList, document.createElement("hr"), replyForm);
+    card.append(actions, replyArea);
+    root.appendChild(card);
+
+    toggleReplies.addEventListener("click", async () => {
+      const opening = replyArea.classList.contains("hidden");
+      replyArea.classList.toggle("hidden", !opening);
+      toggleReplies.textContent = opening ? "收起回复" : "查看回复";
+
+      if (opening) {
+        await loadReplies(message, replyList);
+      }
+    });
+
+    sendReplyBtn.addEventListener("click", async () => {
+      await sendReply(message, replyInput, replyList, sendReplyBtn);
+    });
+  }
 }
-async function sendReply(message,input,repliesRoot) {
- const content=input.value.trim();
- if(!content) {
-  notify("请先填写回复内容。","error");
-  return;
- }
- if(!currentBox) {
-  notify("请先打开留言箱。","error");
-  return;
- }
- setBusy(true);
- try {
-  const {error}=await db.from("replies").insert({
-   box_id:currentBox.id,
-   message_id:message.id,
-   content,
-   is_public:true
+
+async function loadReplies(message, root) {
+  root.replaceChildren();
+
+  const loading = document.createElement("p");
+  loading.className = "muted";
+  loading.textContent = "正在加载回复……";
+  root.appendChild(loading);
+
+  let query = db.from("replies")
+    .select("id,box_id,message_id,content,created_at,is_public")
+    .eq("box_id", currentBox.id)
+    .eq("message_id", message.id)
+    .order("created_at", { ascending: true });
+
+  // 访客只请求公开回复；主人可以请求该留言的全部回复。
+  if (!isOwner()) query = query.eq("is_public", true);
+
+  const { data, error } = await query;
+  root.replaceChildren();
+
+  if (error) {
+    console.error(error);
+    const err = document.createElement("p");
+    err.className = "muted";
+    err.textContent = "读取回复失败：" + error.message +
+      "。请检查 replies 表的 SELECT RLS 策略。";
+    root.appendChild(err);
+    return;
+  }
+
+  if (!data || !data.length) {
+    const empty = document.createElement("p");
+    empty.className = "muted";
+    empty.textContent = "还没有公开回复。你可以写下第一条回复。";
+    root.appendChild(empty);
+    return;
+  }
+
+  data.forEach(reply => {
+    const item = document.createElement("div");
+    item.className = "reply-item";
+
+    const text = document.createElement("p");
+    text.textContent = reply.content || "";
+
+    const meta = document.createElement("div");
+    meta.className = "reply-meta";
+    meta.textContent = formatDate(reply.created_at) +
+      (isOwner() && reply.is_public === false ? " · 仅主人可见" : "");
+
+    item.append(text, meta);
+
+    if (isOwner()) {
+      const controls = document.createElement("div");
+      controls.className = "actions";
+
+      const visibility = document.createElement("button");
+      visibility.type = "button";
+      visibility.className = "secondary small";
+      visibility.textContent = reply.is_public ? "设为隐藏" : "设为公开";
+      visibility.onclick = () => toggleReplyVisibility(reply, message, root);
+
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "danger small";
+      remove.textContent = "删除回复";
+      remove.onclick = () => deleteReply(reply, message, root);
+
+      controls.append(visibility, remove);
+      item.appendChild(controls);
+    }
+
+    root.appendChild(item);
   });
-  if(error) throw error;
-  input.value="";
-  notify("回复发送成功！","ok");
-  await loadReplies(message,repliesRoot);
- } catch(e) {
-  notify(explainError(e,"发送回复"),"error");
- } finally {
-  setBusy(false);
- }
 }
-async function toggleReplyVisibility(reply,message,root) {
- if(!isOwner()) {
-  notify("只有留言箱主人可以修改回复公开状态。","error");
-  return;
- }
- const nextValue=!reply.is_public;
- if(!confirm(nextValue?"确定公开这条回复吗？":"确定隐藏这条回复吗？")) return;
- setBusy(true);
- try {
-  const {data,error}=await db.from("replies")
-   .update({is_public:nextValue})
-   .eq("id",reply.id)
-   .eq("box_id",currentBox.id)
-   .select("id,is_public")
-   .maybeSingle();
-  if(error) throw error;
-  if(!data) {
-   throw new Error("没有更新记录。请检查主人身份、登录状态和数据库 UPDATE 策略。");
-  }
-  notify(nextValue?"回复已公开。":"回复已隐藏，访客将无法通过公开读取策略查看它。","ok");
-  await loadReplies(message,root);
- } catch(e) {
-  notify(explainError(e,"修改回复公开状态"),"error");
- } finally {
-  setBusy(false);
- }
-}
-async function deleteReply(reply,message,root) {
- if(!isOwner()) {
-  notify("只有留言箱主人可以删除回复。","error");
-  return;
- }
- if(!confirm("确定永久删除这条回复吗？删除后无法恢复。")) return;
- setBusy(true);
- try {
-  const {data,error}=await db.from("replies")
-   .delete()
-   .eq("id",reply.id)
-   .eq("box_id",currentBox.id)
-   .select("id");
-  if(error) throw error;
-  if(!data?.length) {
-   throw new Error("没有删除任何记录。请检查主人身份、登录状态和数据库 DELETE 策略。");
-  }
-  notify("回复已删除。","ok");
-  await loadReplies(message,root);
- } catch(e) {
-  notify(explainError(e,"删除回复"),"error");
- } finally {
-  setBusy(false);
- }
-}
-$("themeBtn").addEventListener("click",()=>{
- document.body.classList.toggle("dark");
-});
-$("registerBtn").addEventListener("click",register);
-$("loginBtn").addEventListener("click",login);
-$("logoutBtn").addEventListener("click",logout);
-$("createBoxBtn").addEventListener("click",createBox);
-$("sendBtn").addEventListener("click",sendMessage);
-$("refreshBtn").addEventListener("click",loadBoxes);
-$("shareBtn").addEventListener("click",shareBox);
-$("copyShareBtn").addEventListener("click",copyLink);
-$("backBtn").addEventListener("click",()=>{
- currentBox=null;
- publicMode=false;
- $("detailPanel").classList.add("hidden");
- $("boxesPanel").classList.remove("hidden");
-});
-async function start() {
- if(!window.supabase?.createClient) {
-  notify("Supabase SDK 加载失败，请检查网络。","error");
-  return;
- }
- db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
- try {
-  const {data,error}=await db.auth.getSession();
-  if(error) throw error;
-  user=data.session?.user||null;
-  showLoggedInPanels();
-  const sharedSlug=new URLSearchParams(window.location.search).get("box");
-  if(sharedSlug) {
-   await openPublicBox(sharedSlug);
-  } else if(user) {
-   await loadBoxes();
-  }
-  db.auth.onAuthStateChange((_event,session)=>{
-   user=session?.user||null;
-   if(!publicMode) {
-    showLoggedInPanels();
-    if(user) setTimeout(()=>loadBoxes(),0);
-   }
+
+async function sendReply(message, input, root, button) {
+  const content = input.value.trim();
+  if (!content) return notify("请先填写回复内容。", true);
+  if (!currentBox) return notify("请先打开留言箱。", true);
+
+  button.disabled = true;
+
+  // 新回复默认公开。是否能写入仍由 Supabase RLS 决定。
+  const { error } = await db.from("replies").insert({
+    box_id: currentBox.id,
+    message_id: message.id,
+    content,
+    is_public: true
   });
- } catch(e) {
-  notify(explainError(e,"初始化"),"error");
- }
+
+  button.disabled = false;
+
+  if (error) {
+    console.error(error);
+    notify("发送回复失败：" + error.message, true);
+    return;
+  }
+
+  input.value = "";
+  notify("回复已发送。");
+  await loadReplies(message, root);
 }
-start();
-})();
+
+async function toggleReplyVisibility(reply, message, root) {
+  if (!isOwner()) return notify("只有留言箱主人可以修改回复。", true);
+
+  const nextValue = !reply.is_public;
+  const { data, error } = await db.from("replies")
+    .update({ is_public: nextValue })
+    .eq("id", reply.id)
+    .eq("box_id", currentBox.id)
+    .select("id,is_public")
+    .maybeSingle();
+
+  if (error) {
+    console.error(error);
+    return notify("修改失败：" + error.message +
+      "。请检查 replies 的 UPDATE RLS 策略。", true);
+  }
+  if (!data) {
+    return notify("数据库没有确认修改。请检查主人 UPDATE 策略是否允许操作自己的留言箱。", true);
+  }
+
+  notify(nextValue ? "回复已公开。" : "回复已隐藏。");
+  await loadReplies(message, root);
+}
+
+async function deleteReply(reply, message, root) {
+  if (!isOwner()) return notify("只有留言箱主人可以删除回复。", true);
+  if (!confirm("确定删除这条回复吗？删除后无法恢复。")) return;
+
+  const { data, error } = await db.from("replies")
+    .delete()
+    .eq("id", reply.id)
+    .eq("box_id", currentBox.id)
+    .select("id");
+
+  if (error) {
+    console.error(error);
+    return notify("删除失败：" + error.message +
+      "。请检查 replies 的 DELETE RLS 策略。", true);
+  }
+  if (!data || !data.length) {
+    return notify("没有删除任何记录。请检查主人 DELETE RLS 策略。", true);
+  }
+
+  notify("回复已删除。");
+  await loadReplies(message, root);
+}
+
+async function sendMessage() {
+  if (!currentBox) return notify("请先打开留言箱。", true);
+  if (!currentBox.is_public && !isOwner()) {
+    return notify("此留言箱暂未开放。", true);
+  }
+
+  const content = $("messageContent").value.trim();
+  const file = $("messageImage").files[0];
+
+  if (!content && !file) return notify("请填写留言或选择图片。", true);
+  if (file && !file.type.startsWith("image/")) {
+    return notify("请选择图片文件。", true);
+  }
+  if (file && file.size > 5 * 1024 * 1024) {
+    return notify("图片不能超过 5 MB。", true);
+  }
+
+  let imagePath = null;
+
+  if (file) {
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    imagePath = currentBox.id + "/" + crypto.randomUUID() + "-" + safeName;
+
+    const { error: uploadError } = await db.storage
+      .from("message-images")
+      .upload(imagePath, file, { upsert: false });
+
+    if (uploadError) {
+      console.error(uploadError);
+      return notify("图片上传失败：" + uploadError.message, true);
+    }
+  }
+
+  const { error } = await db.from("messages").insert({
+    box_id: currentBox.id,
+    nickname: $("nickname").value.trim() || null,
+    anonymous: $("anonymous").checked,
+    content,
+    image_path: imagePath
+  });
+
+  if (error) {
+    console.error(error);
+    return notify("发送留言失败：" + error.message, true);
+  }
+
+  $("messageContent").value = "";
+  $("messageImage").value = "";
+  notify("留言已发送。");
+  await loadMessages();
+}
+
+async function copyShare() {
+  if (!currentBox) return;
+  const value = $("shareUrl").value;
+  try {
+    await navigator.clipboard.writeText(value);
+    notify("分享链接已复制。");
+  } catch {
+    prompt("请复制分享链接：", value);
+  }
+}
+
+function goBack() {
+  currentBox = null;
+  publicMode = false;
+  $("boxPanel").classList.add("hidden");
+  if (user) $("ownerPanel").classList.remove("hidden");
+}
+
+$("loginBtn").addEventListener("click", login);
+$("registerBtn").addEventListener("click", register);
+$("logoutBtn").addEventListener("click", logout);
+$("createBoxBtn").addEventListener("click", createBox);
+$("refreshBoxesBtn").addEventListener("click", loadBoxes);
+$("refreshMessagesBtn").addEventListener("click", loadMessages);
+$("sendMessageBtn").addEventListener("click", sendMessage);
+$("copyShareBtn").addEventListener("click", copyShare);
+$("backBtn").addEventListener("click", goBack);
+
+async function init() {
+  if (!window.supabase) {
+    setStatus("Supabase SDK 加载失败，请检查网络。");
+    return;
+  }
+
+  const { data, error } = await db.auth.getSession();
+  if (error) console.error(error);
+
+  user = data?.session?.user || null;
+  updateAuthUI();
+
+  db.auth.onAuthStateChange((_event, session) => {
+    user = session?.user || null;
+    updateAuthUI();
+  });
+
+  const slug = new URLSearchParams(location.search).get("box");
+  if (slug) {
+    await openPublicBox(slug);
+  } else {
+    setStatus(user ? "已连接。请选择或创建留言箱。" : "欢迎来到花花的星海信箱。");
+  }
+}
+
+init();
 </script>
 </body>
 </html>
-
