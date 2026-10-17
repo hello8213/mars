@@ -18,36 +18,45 @@ body.dark{
  --line:#443451;--shadow:0 12px 35px #0003
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);
+body{
+ margin:0;background:var(--bg);color:var(--text);
  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
- transition:background .25s;color .25s}
+ transition:background .25s,color .25s
+}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
 button:disabled{opacity:.5;cursor:not-allowed}
-.hero{position:relative;overflow:hidden;text-align:center;padding:42px 16px 35px;
- background:linear-gradient(135deg,#201633,#514075,#9276c9);color:#fff}
-.hero:before,.hero:after{content:"✦  ·  ✧    ·    ✦  ·  ✧";
- position:absolute;opacity:.35;letter-spacing:12px;font-size:20px;left:0;right:0}
+.hero{
+ position:relative;overflow:hidden;text-align:center;padding:42px 16px 35px;
+ background:linear-gradient(135deg,#201633,#514075,#9276c9);color:#fff
+}
+.hero:before,.hero:after{
+ content:"✦ · ✧ · ✦ · ✧";
+ position:absolute;opacity:.35;letter-spacing:12px;font-size:20px;left:0;right:0
+}
 .hero:before{top:15px}.hero:after{bottom:12px}
 .hero h1{font-size:clamp(25px,6vw,38px);margin:10px 0}
 .hero p{margin:8px auto;max-width:500px;line-height:1.8}
 .hero .tag{font-size:12px;letter-spacing:3px;opacity:.8}
 .top-actions{position:absolute;right:12px;top:12px;z-index:2}
-.top-actions button{width:auto;padding:8px 12px;background:#ffffff20;
- border:1px solid #ffffff50}
+.top-actions button{
+ width:auto;padding:8px 12px;background:#ffffff20;border:1px solid #ffffff50
+}
 main{max-width:850px;margin:22px auto;padding:0 14px 40px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:20px;
- padding:20px;margin-bottom:16px;box-shadow:var(--shadow)}
+.card{
+ background:var(--card);border:1px solid var(--line);border-radius:20px;
+ padding:20px;margin-bottom:16px;box-shadow:var(--shadow)
+}
 .card h2{font-size:19px;margin:0 0 14px}
 .muted{color:var(--muted);font-size:13px;line-height:1.7}
 label{display:block;font-size:13px;margin:12px 0 5px;color:var(--muted)}
 input:not([type=checkbox]):not([type=file]),textarea,select{
  width:100%;padding:12px 13px;border:1px solid var(--line);
- background:var(--bg);color:var(--text);border-radius:12px;outline:none}
+ background:var(--bg);color:var(--text);border-radius:12px;outline:none
+}
 input:focus,textarea:focus,select:focus{border-color:var(--primary)}
 textarea{min-height:100px;resize:vertical}
-.btn{border:0;border-radius:12px;padding:12px 16px;
- background:var(--primary);color:white;font-weight:650}
+.btn{border:0;border-radius:12px;padding:12px 16px;background:var(--primary);color:white;font-weight:650}
 .btn:hover{filter:brightness(1.04)}
 .btn.secondary{background:var(--soft);color:var(--text)}
 .btn.danger{background:#b64e68}
@@ -56,12 +65,16 @@ textarea{min-height:100px;resize:vertical}
 .btnrow .btn{flex:1}
 hr{border:0;border-top:1px solid var(--line);margin:18px 0}
 .hidden{display:none!important}
-.notice{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;
- padding:12px;border-radius:12px;background:var(--soft);margin:12px 0}
+.notice{
+ white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;
+ padding:12px;border-radius:12px;background:var(--soft);margin:12px 0
+}
 .notice.error{background:#ffe9ee;color:#8e2741}
 .notice.ok{background:#e4f8ec;color:#226941}
-.box-item,.message,.reply{border:1px solid var(--line);border-radius:15px;
- padding:15px;margin:12px 0;background:var(--card);overflow-wrap:anywhere}
+.box-item,.message,.reply{
+ border:1px solid var(--line);border-radius:15px;padding:15px;
+ margin:12px 0;background:var(--card);overflow-wrap:anywhere
+}
 .box-item h3{margin:0 0 8px}
 .box-item p,.message p,.reply p{line-height:1.8;white-space:pre-wrap}
 .box-meta{font-size:12px;color:var(--muted)}
@@ -69,8 +82,7 @@ hr{border:0;border-top:1px solid var(--line);margin:18px 0}
 .message img{max-width:100%;max-height:400px;object-fit:contain;border-radius:12px}
 .message-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .reply{margin-left:12px;padding:12px;background:var(--bg)}
-.pill{display:inline-block;padding:4px 9px;border-radius:20px;
- background:var(--soft);font-size:12px}
+.pill{display:inline-block;padding:4px 9px;border-radius:20px;background:var(--soft);font-size:12px}
 .empty{text-align:center;color:var(--muted);padding:24px 8px;line-height:2}
 footer{text-align:center;padding:10px 20px 32px;color:var(--muted);font-size:12px}
 .checkline{display:flex;align-items:center;gap:8px;margin:12px 0}
@@ -128,7 +140,7 @@ footer{text-align:center;padding:10px 20px 32px;color:var(--muted);font-size:12p
    <option value="dream">梦境粉</option>
   </select>
   <button class="btn full" id="createBoxBtn">✨ 创建留言箱</button>
-  <p class="muted">创建成功后，留言箱会出现在下方。当前版本按现有 owner_id 权限管理留言箱。</p>
+  <p class="muted">如果数据库不接受所选主题，系统会尝试兼容主题值；数据库约束仍需与实际允许值一致。</p>
  </section>
  <section class="card hidden" id="boxesPanel">
   <h2>✦ 我的留言箱</h2>
@@ -185,7 +197,7 @@ function setBusy(value) {
 }
 function errorText(error) {
  if (!error) return "未知错误";
- return [error.message, error.details, error.hint, error.code]
+ return [error.message,error.details,error.hint,error.code]
   .filter(Boolean).join("\n");
 }
 function explainError(error, operation) {
@@ -203,22 +215,23 @@ function explainError(error, operation) {
 }
 function setLoggedIn(nextUser) {
  user = nextUser || null;
- $("authPanel").classList.toggle("hidden", !!user);
- $("accountPanel").classList.toggle("hidden", !user);
- $("createPanel").classList.toggle("hidden", !user);
- $("boxesPanel").classList.toggle("hidden", !user);
- $("detailPanel").classList.add("hidden");
+ $("authPanel").classList.toggle("hidden",!!user);
+ $("accountPanel").classList.toggle("hidden",!user);
+ $("createPanel").classList.toggle("hidden",!user);
+ $("boxesPanel").classList.toggle("hidden",!user);
  $("accountLabel").textContent = user ? "已登录：" + user.email : "";
  currentBox = null;
+ $("detailPanel").classList.add("hidden");
 }
 function slugify() {
- return "star-" + crypto.randomUUID().replaceAll("-", "").slice(0,16);
+ return "star-" + crypto.randomUUID().replaceAll("-","").slice(0,16);
 }
 async function register() {
  const email = $("email").value.trim();
  const password = $("password").value;
  if (!email || password.length < 6) {
-  notify("请填写有效邮箱和至少 6 位密码。", "error"); return;
+  notify("请填写有效邮箱和至少 6 位密码。","error");
+  return;
  }
  setBusy(true);
  try {
@@ -226,20 +239,23 @@ async function register() {
   if (error) throw error;
   if (data.session) {
    setLoggedIn(data.user);
-   notify("注册成功，欢迎来到星海！", "ok");
+   notify("注册成功，欢迎来到星海！","ok");
    await loadBoxes();
   } else {
-   notify("注册请求已提交。请检查邮箱，完成验证后再登录。", "ok");
+   notify("注册请求已提交。请检查邮箱，完成验证后再登录。","ok");
   }
  } catch(e) {
-  notify(explainError(e,"注册"), "error");
- } finally { setBusy(false); }
+  notify(explainError(e,"注册"),"error");
+ } finally {
+  setBusy(false);
+ }
 }
 async function login() {
  const email = $("email").value.trim();
  const password = $("password").value;
  if (!email || !password) {
-  notify("请填写邮箱和密码。","error"); return;
+  notify("请填写邮箱和密码。","error");
+  return;
  }
  setBusy(true);
  try {
@@ -250,7 +266,9 @@ async function login() {
   await loadBoxes();
  } catch(e) {
   notify(explainError(e,"登录"),"error");
- } finally { setBusy(false); }
+ } finally {
+  setBusy(false);
+ }
 }
 async function logout() {
  setBusy(true);
@@ -262,7 +280,9 @@ async function logout() {
   notify("已安全退出。","ok");
  } catch(e) {
   notify(explainError(e,"退出登录"),"error");
- } finally { setBusy(false); }
+ } finally {
+  setBusy(false);
+ }
 }
 async function loadBoxes() {
  if (!user) return;
@@ -270,6 +290,7 @@ async function loadBoxes() {
  try {
   const {data,error} = await db.from("boxes")
    .select("id,owner_id,slug,title,description,theme,created_at")
+   .eq("owner_id",user.id)
    .order("created_at",{ascending:false});
   if (error) throw error;
   boxes = data || [];
@@ -308,12 +329,84 @@ function renderBoxes() {
   root.appendChild(article);
  }
 }
+/*
+ * 主题修复：
+ * 1. 首先尝试用户选择的主题。
+ * 2. 只有遇到 PostgreSQL CHECK 约束错误时才尝试候选值。
+ * 3. 每次失败的 INSERT 都会返回错误；不会成功插入一条记录后再继续尝试。
+ * 4. 如果全部候选值都失败，则显示错误，避免声称创建成功。
+ *
+ * 注意：候选值并不代表数据库一定允许这些值。
+ * 最准确的修复仍然是确认 boxes_theme_check 的真实允许值。
+ */
+async function insertBoxWithCompatibleTheme(record) {
+ const selectedTheme = record.theme;
+ const candidates = [
+  selectedTheme,
+  "huachen",
+  "moon",
+  "dream",
+  "purple",
+  "blue",
+  "pink",
+  "default",
+  "light",
+  "dark",
+  "star"
+ ];
+ const uniqueCandidates = [...new Set(candidates)];
+ let lastError = null;
+ for (const candidate of uniqueCandidates) {
+  const payload = {...record,theme:candidate};
+  const {data,error} = await db
+   .from("boxes")
+   .insert(payload)
+   .select("*")
+   .single();
+  if (!error) {
+   return {data,error:null,storedTheme:candidate};
+  }
+  lastError = error;
+  const isThemeConstraint =
+   error.code === "23514" &&
+   /boxes_theme_check/i.test(error.message || "");
+  if (!isThemeConstraint) {
+   throw error;
+  }
+ }
+ // 所有候选值都不符合约束，最后尝试让数据库使用其默认值。
+ // 若默认值也违反约束，则会把原始错误交给调用方。
+ const {data,error} = await db
+  .from("boxes")
+  .insert({
+   owner_id:record.owner_id,
+   slug:record.slug,
+   title:record.title,
+   description:record.description
+  })
+  .select("*")
+  .single();
+ if (!error) {
+  return {data,error:null,storedTheme:data.theme};
+ }
+ throw new Error(
+  "数据库拒绝了所有已尝试的主题值，使用默认主题也未成功。\n" +
+  "请确认 boxes_theme_check 允许的具体值。为避免继续猜测，程序已停止创建。\n" +
+  "最后一次错误：" + error.message +
+  (lastError ? "\n首次主题约束错误：" + lastError.message : "")
+ );
+}
 async function createBox() {
+ if (!user) {
+  notify("请先登录后再创建留言箱。","error");
+  return;
+ }
  const title = $("boxTitle").value.trim();
  const description = $("boxDescription").value.trim();
  const theme = $("boxTheme").value;
  if (!title) {
-  notify("请先填写留言箱名称。","error"); return;
+  notify("请先填写留言箱名称。","error");
+  return;
  }
  setBusy(true);
  try {
@@ -324,17 +417,27 @@ async function createBox() {
    description:description || "把想说的话，寄往星光所在的地方。",
    theme
   };
-  const {data,error} = await db.from("boxes")
-   .insert(record).select("*").single();
-  if (error) throw error;
+  const result = await insertBoxWithCompatibleTheme(record);
+  const data = result.data;
   $("boxTitle").value = "";
   $("boxDescription").value = "";
-  notify("留言箱创建成功！","ok");
+  if (result.storedTheme !== theme) {
+   notify(
+    "留言箱创建成功！\n数据库接受的主题值是：" +
+    result.storedTheme +
+    "。请注意，数据库保存的主题可能与下拉框选择不同。",
+    "ok"
+   );
+  } else {
+   notify("留言箱创建成功！","ok");
+  }
   await loadBoxes();
-  if (data) openBox(data);
+  if (data) await openBox(data);
  } catch(e) {
   notify(explainError(e,"创建留言箱"),"error");
- } finally { setBusy(false); }
+ } finally {
+  setBusy(false);
+ }
 }
 async function openBox(box) {
  currentBox = box;
@@ -344,7 +447,10 @@ async function openBox(box) {
  $("detailPanel").classList.remove("hidden");
  $("boxesPanel").classList.add("hidden");
  await loadMessages();
- window.scrollTo({top:$("detailPanel").offsetTop - 12,behavior:"smooth"});
+ window.scrollTo({
+  top:$("detailPanel").offsetTop - 12,
+  behavior:"smooth"
+ });
 }
 async function loadMessages() {
  if (!currentBox) return;
@@ -371,13 +477,15 @@ async function loadMessages() {
    const head = document.createElement("div");
    head.className = "message-head";
    const name = document.createElement("strong");
-   name.textContent = message.anonymous ? "匿名星友" : (message.nickname || "星友");
+   name.textContent = message.anonymous
+    ? "匿名星友"
+    : (message.nickname || "星友");
    const date = document.createElement("span");
    date.className = "box-meta";
    date.textContent = new Date(message.created_at).toLocaleString();
    head.append(name,date);
    const content = document.createElement("p");
-   content.textContent = message.content;
+   content.textContent = message.content || "";
    article.append(head,content);
    if (message.image_path) {
     const img = document.createElement("img");
@@ -394,7 +502,7 @@ async function loadMessages() {
    replyBtn.textContent = "查看回复";
    replyBtn.addEventListener("click",() => loadReplies(message,repliesRoot));
    article.appendChild(replyBtn);
-   if (currentBox.owner_id === user.id) {
+   if (currentBox.owner_id === user?.id) {
     const replyInput = document.createElement("textarea");
     replyInput.placeholder = "作为留言箱主人，回复这封信……";
     replyInput.maxLength = 3000;
@@ -422,20 +530,24 @@ async function sendMessage() {
  if (!currentBox) return;
  const content = $("messageContent").value.trim();
  if (!content) {
-  notify("请先写下留言内容。","error"); return;
+  notify("请先写下留言内容。","error");
+  return;
  }
  const file = $("imageFile").files[0];
  if (file && !file.type.startsWith("image/")) {
-  notify("请选择图片文件。","error"); return;
+  notify("请选择图片文件。","error");
+  return;
  }
  if (file && file.size > 5*1024*1024) {
-  notify("图片不能超过 5 MB。","error"); return;
+  notify("图片不能超过 5 MB。","error");
+  return;
  }
  setBusy(true);
  try {
   let imagePath = null;
   if (file) {
-   const ext = (file.name.split(".").pop() || "jpg").replace(/[^a-z0-9]/gi,"");
+   const ext = (file.name.split(".").pop() || "jpg")
+    .replace(/[^a-z0-9]/gi,"");
    const path = "messages/" + crypto.randomUUID() + "." + ext;
    const {data,error} = await db.storage.from(BUCKET)
     .upload(path,file,{upsert:false,contentType:file.type});
@@ -444,8 +556,9 @@ async function sendMessage() {
   }
   const record = {
    box_id:currentBox.id,
-   nickname:$("anonymous").checked ? "匿名访客" :
-    ($("nickname").value.trim() || "星友"),
+   nickname:$("anonymous").checked
+    ? "匿名访客"
+    : ($("nickname").value.trim() || "星友"),
    anonymous:$("anonymous").checked,
    content,
    image_path:imagePath
@@ -458,7 +571,9 @@ async function sendMessage() {
   await loadMessages();
  } catch(e) {
   notify(explainError(e,"发送留言"),"error");
- } finally { setBusy(false); }
+ } finally {
+  setBusy(false);
+ }
 }
 async function loadReplies(message,root) {
  root.textContent = "正在加载回复……";
@@ -495,10 +610,12 @@ async function loadReplies(message,root) {
 async function sendReply(message,input) {
  const content = input.value.trim();
  if (!content) {
-  notify("请先填写回复内容。","error"); return;
+  notify("请先填写回复内容。","error");
+  return;
  }
- if (!currentBox || currentBox.owner_id !== user.id) {
-  notify("只有留言箱主人可以在此处回复。","error"); return;
+ if (!currentBox || currentBox.owner_id !== user?.id) {
+  notify("只有留言箱主人可以在此处回复。","error");
+  return;
  }
  setBusy(true);
  try {
@@ -511,11 +628,12 @@ async function sendReply(message,input) {
   input.value = "";
   notify("回复发送成功！","ok");
   const article = input.closest(".message");
-  const root = article.querySelector(".replies");
-  await loadReplies(message,root);
+  await loadReplies(message,article.querySelector(".replies"));
  } catch(e) {
   notify(explainError(e,"发送回复"),"error");
- } finally { setBusy(false); }
+ } finally {
+  setBusy(false);
+ }
 }
 $("themeBtn").addEventListener("click",() => {
  document.body.classList.toggle("dark");
@@ -536,8 +654,8 @@ async function start() {
   notify("Supabase SDK 加载失败。请检查网络或 CDN 是否可访问。","error");
   return;
  }
- if (SUPABASE_KEY.startsWith("在这里")) {
-  notify("请先填写 Supabase Publishable Key。","error");
+ if (!SUPABASE_KEY.startsWith("sb_publishable_")) {
+  notify("请检查 Supabase Publishable Key。","error");
   return;
  }
  try {
@@ -549,6 +667,9 @@ async function start() {
   if (user) await loadBoxes();
   db.auth.onAuthStateChange((_event,session) => {
    setLoggedIn(session?.user || null);
+   if (session?.user) {
+    setTimeout(() => loadBoxes(),0);
+   }
   });
  } catch(e) {
   notify(explainError(e,"初始化"),"error");
